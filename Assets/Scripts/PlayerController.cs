@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +10,11 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;            //좌우 이동 속도
     public float jumpForce = 7f;            //점프 힘
     private bool isGrounded = false;        //땅에 닿아있는지 여부
+
+    [Header("플레이어 체력 시스템")]
+    public int maxHP = 20;
+    private int currentHP;
+    public Slider hpSlider;
 
     private Rigidbody2D rb;
     public SpriteRenderer sr;
@@ -23,6 +30,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         //animator = GetComponent<Animator>();
+
+        currentHP = maxHP;
+        hpSlider.value = 1f;
     }
 
  
@@ -67,6 +77,22 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+        hpSlider.value = (float)currentHP / maxHP;
+
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
 }
