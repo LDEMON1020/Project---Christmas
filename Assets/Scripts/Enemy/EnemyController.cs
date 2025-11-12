@@ -11,6 +11,10 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     private Rigidbody2D rb;
     private bool isFacingRight = true;
 
+    [Header("체력 시스템")]
+    public int maxHP = 20;
+    private int currentHP;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -44,5 +48,17 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     {
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+        if (currentHP <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

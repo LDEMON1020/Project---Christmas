@@ -8,9 +8,14 @@ public class ReconEnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight = true;  // 현재 바라보는 방향
 
+    [Header("체력 시스템")]
+    public int maxHP = 20;
+    private int currentHP;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentHP = maxHP;
     }
 
     void FixedUpdate()
@@ -34,5 +39,20 @@ public class ReconEnemyController : MonoBehaviour
         {
             Flip();
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

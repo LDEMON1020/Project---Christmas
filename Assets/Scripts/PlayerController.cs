@@ -17,19 +17,20 @@ public class PlayerController : MonoBehaviour
     public Slider hpSlider;
 
     private Rigidbody2D rb;
+    public SpriteRenderer candySr;
     public SpriteRenderer sr;
-    //public Animator animator;
-
+  
     [Header("땅 체크")]
     public Transform groundCheck;           //땅 체크용
     public float checkRadius = 0.2f;
     public LayerMask groundLayer;           //ground 레이어 설정 필요
 
+    public CandyAttack candyAttack;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponentInChildren<SpriteRenderer>();
-        //animator = GetComponent<Animator>();
+      
 
         currentHP = maxHP;
         hpSlider.value = 1f;
@@ -40,19 +41,24 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
-        //UpdateAnimation();
+    
     }
     void Move()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        // 좌우 반전
-        if (moveInput != 0)
-            sr.flipX = moveInput < 0;
+        //캐릭터 좌우 반전
+        if (moveInput > 0)
+            sr.flipX = false; // 오른쪽
+
+
+        else if (moveInput < 0)
+            sr.flipX = true; // 왼쪽
+  
     }
 
-    void Jump()
+        void Jump()
     {
         // Ground 체크
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
@@ -64,10 +70,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //   void UpdateAnimation()
-    //   {
-    //      나중에 애니메이션 추가할때 작성    
-    //   }
+   
 
     // 땅 체크 시각화 (Scene에서 보임)
     void OnDrawGizmosSelected()
@@ -93,6 +96,16 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void EnableCandyAttackCollider()
+    {
+        candyAttack.EnableWeaponCollider();
+    }
+
+    public void DisableCandyAttackCollider()
+    {
+        candyAttack.DisableWeaponCollider();
     }
 
 }
