@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        currentHP = maxHP;
     }
 
     void FixedUpdate()

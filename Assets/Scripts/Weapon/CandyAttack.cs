@@ -5,18 +5,19 @@ using UnityEngine;
 public class CandyAttack : MonoBehaviour
 {
     [Header("공격 설정")]
-    public int Damage = 20;       // 공격력
-    public float attackRate = 0.5f;     // 공격 속도 (쿨타임)
-    public string enemyTag = "Enemy";   // 공격할 대상 태그
+    public int Damage = 20;            // 데미지
+    public float attackRange = 1.5f;   // 레이 길이
+    public float attackRate = 0.5f;    // 공격 쿨타임
+    public string enemyTag = "Enemy";  // 적 태그
 
     private float nextAttackTime = 0f;
     private Animator animator;
-    private Collider2D candyCollider;
+    private SpriteRenderer playerSR;   // 방향 판별용
 
     void Start()
     {
         animator = GetComponentInParent<Animator>();
-        candyCollider = GetComponent<Collider2D>();
+        playerSR = GetComponentInParent<SpriteRenderer>();
     }
 
     void Update()
@@ -26,54 +27,35 @@ public class CandyAttack : MonoBehaviour
             Attack();
             nextAttackTime = Time.time + attackRate;
         }
-
-        FlipCandy();
     }
 
     void Attack()
     {
         if (animator != null)
             animator.SetTrigger("CandyAttack");
-        // 애니메이션 이벤트에서 EnableWeaponCollider/DisableWeaponCollider 호출
+
+        // 애니메이션 이벤트에서 DoRaycast() 사용해도 됨
+        DoRaycast();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void DoRaycast()
     {
-        if (collision.CompareTag(enemyTag))
+        // 플레이어가 바라보는 방향
+        Vector2 dir = playerSR.flipX ? Vector2.left : Vector2.right;
+
+        // 레이캐스트
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, attackRange);
+
+        if (hit.collider != null)
         {
-            collision.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
-            collision.GetComponent<EnemyController>()?.TakeDamage(Damage);
-            collision.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+            if (hit.collider.CompareTag(enemyTag))
+            {
+                hit.collider.GetComponent<EnemyController>()?.TakeDamage(Damage);
+                hit.collider.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
+                hit.collider.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+            }
         }
     }
-    public void EnableWeaponCollider()
-    {
-        candyCollider.isTrigger = true;
-    }
 
-    public void DisableWeaponCollider()
-    {
-        candyCollider.isTrigger = false;
-    }
 
-    void FlipCandy()
-    {
-    SpriteRenderer playerSR = GetComponentInParent<SpriteRenderer>();
-    if (playerSR == null) return;
-
-    Vector3 scale = transform.localScale;
-
-    if (playerSR.flipX) // 플레이어가 왼쪽을 바라볼 때
-    {
-        scale.x = -Mathf.Abs(scale.x);      // 무기 스프라이트 좌우 반전
-        transform.localPosition = new Vector3(-Mathf.Abs(transform.localPosition.x), transform.localPosition.y, transform.localPosition.z);
-    }
-    else // 오른쪽
-    {
-        scale.x = Mathf.Abs(scale.x);
-        transform.localPosition = new Vector3(Mathf.Abs(transform.localPosition.x), transform.localPosition.y, transform.localPosition.z);
-    }
-
-    transform.localScale = scale;
-    }
 }

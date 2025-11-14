@@ -48,14 +48,11 @@ public class PlayerController : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        //캐릭터 좌우 반전
         if (moveInput > 0)
-            sr.flipX = false; // 오른쪽
-
-
+            transform.localScale = new Vector3(1, 1, 1);
         else if (moveInput < 0)
-            sr.flipX = true; // 왼쪽
-  
+            transform.localScale = new Vector3(-1, 1, 1);
+
     }
 
         void Jump()
@@ -71,16 +68,6 @@ public class PlayerController : MonoBehaviour
     }
 
    
-
-    // 땅 체크 시각화 (Scene에서 보임)
-    void OnDrawGizmosSelected()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
-        }
-    }
 
     public void TakeDamage(int damage)
     {
@@ -98,14 +85,8 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void EnableCandyAttackCollider()
-    {
-        candyAttack.EnableWeaponCollider();
-    }
 
-    public void DisableCandyAttackCollider()
-    {
-        candyAttack.DisableWeaponCollider();
-    }
+
+
 
 }
