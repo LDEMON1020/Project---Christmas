@@ -5,44 +5,57 @@ using UnityEngine;
 public class BallAttack : MonoBehaviour
 {
     [Header("발사체 설정")]
-    public float power = 10f;         // 발사 힘
-    public float angle = 45f;         // 발사 각도 (degree)
-    public float lifeTime = 3f;       // 자동 삭제 시간
+    public float power = 10f;              // 발사 힘
+    public float angle = 45f;              // 발사 각도
+    public float lifeTime = 3f;            // 폭발까지 시간
     public int damage = 20;
     public string enemyTag = "Enemy";
+    public GameObject explosionPrefab;     // 폭발 범위 프리팹
 
     private Rigidbody2D rb;
 
-    // 발사 함수
     public void Launch(bool isFacingRight)
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // 플레이어와 겹치지 않게 Spawn 위치 조정
         Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
         transform.position += (Vector3)(direction * 0.6f);
 
-        // 각도를 라디안으로 변환
         float rad = angle * Mathf.Deg2Rad;
-
-        // x, y 힘 계산
         Vector2 force = new Vector2(Mathf.Cos(rad) * power * (isFacingRight ? 1 : -1),
                                     Mathf.Sin(rad) * power);
 
         rb.AddForce(force, ForceMode2D.Impulse);
 
-        Destroy(gameObject, lifeTime);
+        StartCoroutine(ExplodeAfterDelay());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator ExplodeAfterDelay()
     {
-        if (collision.collider.CompareTag(enemyTag))
+        yield return new WaitForSeconds(lifeTime);
+
+        // 폭발 프리팹 생성
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+        // 원형 범위 안 적 체크
+        CircleCollider2D col = explosion.GetComponent<CircleCollider2D>();
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
+            explosion.transform.position, // 중심
+            col.radius                    // 반지름
+        );
+
+        foreach (Collider2D enemy in hitEnemies)
         {
-            collision.collider.GetComponent<EnemyController>()?.TakeDamage(damage);
-            collision.collider.GetComponent<RangedEnemy>()?.TakeDamage(damage);
-            collision.collider.GetComponent<ReconEnemyController>()?.TakeDamage(damage);
+            if (enemy.CompareTag(enemyTag))
+            {
+                enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
+                enemy.GetComponent<RangedEnemy>()?.TakeDamage(damage);
+                enemy.GetComponent<ReconEnemyController>()?.TakeDamage(damage);
+            }
         }
 
+        // 폭발 프리팹 잠시 후 삭제
+        Destroy(explosion, 0.5f);
         Destroy(gameObject);
     }
 }

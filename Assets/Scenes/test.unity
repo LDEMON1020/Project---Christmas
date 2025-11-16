@@ -1756,6 +1756,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallPrefab: {fileID: 7758220732427006602, guid: 0ed72d2a3c4d4ab478a7bda39e47f27c, type: 3}
   firePoint: {fileID: 1620515277}
+  shootPower: 10
+  shootAngle: 45
 --- !u!1 &1465919466
 GameObject:
   m_ObjectHideFlags: 0

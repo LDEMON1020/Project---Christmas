@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BallShooter : MonoBehaviour
 {
-    public GameObject BallPrefab;       // 발사체 prefab
+    public GameObject BallPrefab;       // 발사체 프리팹
     public Transform firePoint;         // 발사 위치
+    public float shootPower = 10f;      // 발사 속도
+    public float shootAngle = 45f;      // 발사 각도
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
             Shoot();
         }
@@ -20,6 +22,9 @@ public class BallShooter : MonoBehaviour
         bool isFacingRight = transform.localScale.x > 0;
 
         GameObject proj = Instantiate(BallPrefab, firePoint.position, Quaternion.identity);
-        proj.GetComponent<BallAttack>().Launch(isFacingRight);
+        BallAttack ball = proj.GetComponent<BallAttack>();
+        ball.power = shootPower;
+        ball.angle = shootAngle;
+        ball.Launch(isFacingRight);
     }
 }
