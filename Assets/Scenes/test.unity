@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &66867824
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -284,6 +284,10 @@ MonoBehaviour:
   inventoryUI: {fileID: 1592172507}
   itemSlotParent: {fileID: 1427056495}
   itemSlotPrefab: {fileID: 927583190668064454, guid: 69e366148e73ea0478cb4834f2498f7b, type: 3}
+  weaponHolder: {fileID: 1032153412}
+  startingItems:
+  - {fileID: 11400000, guid: 048f45123bd45b74cb18815b40dcaee2, type: 2}
+  - {fileID: 11400000, guid: f646d0d7c3714484da98b024d64075ca, type: 2}
   inventoryKey: 101
   slots: []
 --- !u!4 &115469891
@@ -561,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &294642983
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1842,7 +1846,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1455215472}
   - component: {fileID: 1455215471}
-  - component: {fileID: 1455215478}
   - component: {fileID: 1455215474}
   - component: {fileID: 1455215476}
   - component: {fileID: 1455215475}
@@ -2042,22 +2045,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1455215478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1455215470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1446421693103924eb6cda7cbba5d213, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BallPrefab: {fileID: 7758220732427006602, guid: 0ed72d2a3c4d4ab478a7bda39e47f27c, type: 3}
-  firePoint: {fileID: 1620515277}
-  shootPower: 10
-  shootAngle: 45
 --- !u!1 &1465919466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,7 +2220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1620515277}
   m_Layer: 7
-  m_Name: FirePoint
+  m_Name: PlayerFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2607,9 +2594,7 @@ MonoBehaviour:
   attackCooldown: 1
   attackDelay: 0.2
   animator: {fileID: 294642987}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  playerTag: Player
 --- !u!95 &1910733989
 Animator:
   serializedVersion: 5

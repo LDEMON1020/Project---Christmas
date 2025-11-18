@@ -9,6 +9,16 @@ public class BallShooter : MonoBehaviour
     public float shootPower = 10f;      // 발사 속도
     public float shootAngle = 45f;      // 발사 각도
 
+    private void Start()
+    {
+        GameObject findPoint = GameObject.Find("PlayerFirePoint");
+
+        if (findPoint != null)
+        {
+            firePoint = findPoint.transform;
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))

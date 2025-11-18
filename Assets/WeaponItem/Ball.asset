@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7769ce59f7d51734abc0d4ddd18f4a6e, type: 3}
-  m_Name: Candy
+  m_Name: Ball
   m_EditorClassIdentifier: 
-  itemName: Candy
-  itemIcon: {fileID: 21300000, guid: 799955f8c98c9464c848e01986f93e20, type: 3}
-  weaponPrefab: {fileID: 8537969873211773782, guid: 5c083c2e813257d40b9d679a4c16c8f4, type: 3}
+  itemName: Ball
+  itemIcon: {fileID: 21300000, guid: 806bdef285f4f61418f5dd661a38730c, type: 3}
+  weaponPrefab: {fileID: 2323991201121892716, guid: 4a478263c555b44418cd44e1c48145cd, type: 3}
   damage: 5
   attackRate: 5
-  weaponType: 0
+  weaponType: 2
