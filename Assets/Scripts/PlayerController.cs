@@ -67,17 +67,36 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
+
 
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
         hpSlider.value = (float)currentHP / maxHP;
 
+        // 데미지 입었을 때 깜빡이는 코루틴 실행
+        if (currentHP > 0) // 죽지 않았을 때만 효과 실행
+        {
+            StartCoroutine(DamageFlash());
+        }
+
         if (currentHP <= 0)
         {
             Die();
         }
+    }
+
+    // 데미지 플래시 효과 코루틴
+    IEnumerator DamageFlash()
+    {
+        //반투명 빨간색으로 변경
+        sr.color = new Color(1f, 0f, 0f, 0.5f);
+
+        //0.2초 대기 (깜빡이는 시간)
+        yield return new WaitForSeconds(0.2f);
+
+        //원래 색(흰색)으로 복귀
+        sr.color = Color.white;
     }
 
     void Die()
