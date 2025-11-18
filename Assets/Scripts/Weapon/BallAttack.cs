@@ -36,6 +36,8 @@ public class BallAttack : MonoBehaviour
 
         // 폭발 프리팹 생성
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        
+        yield return new WaitForFixedUpdate();
 
         // 원형 범위 안 적 체크
         CircleCollider2D col = explosion.GetComponent<CircleCollider2D>();
