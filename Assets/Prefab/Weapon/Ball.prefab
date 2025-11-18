@@ -196,6 +196,6 @@ MonoBehaviour:
   power: 31.9
   angle: 31.1
   lifeTime: 3
-  damage: 20
+  damage: 10
   enemyTag: Enemy
   explosionPrefab: {fileID: 8888844358310461360, guid: 77c16f3967bb27d43ac0b1a1ce33ce3a, type: 3}

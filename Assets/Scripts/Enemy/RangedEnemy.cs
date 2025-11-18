@@ -19,7 +19,7 @@ public class RangedEnemy : MonoBehaviour
 
     [Header("체력 관련")]
     public int maxHP = 5;
-    private int currentHP;
+    public int currentHP;
 
     private Transform player;
     private float lastAttackTime;

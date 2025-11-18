@@ -27,6 +27,7 @@ public class EnemyProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // 플레이어나 땅에 닿으면 삭제
         if (other.CompareTag("Player"))
         {
             PlayerController pc = other.GetComponent<PlayerController>();
@@ -34,7 +35,10 @@ public class EnemyProjectile : MonoBehaviour
             {
                 pc.TakeDamage(damage);
             }
-
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("Ground"))
+        {
             Destroy(gameObject);
         }
     }

@@ -10,7 +10,7 @@ public class ReconEnemyController : MonoBehaviour
 
     [Header("체력 시스템")]
     public int maxHP = 20;
-    private int currentHP;
+    public int currentHP;
 
     void Start()
     {
