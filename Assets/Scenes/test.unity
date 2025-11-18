@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 66867826}
   - component: {fileID: 66867825}
   - component: {fileID: 66867824}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RangedEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 294642985}
   - component: {fileID: 294642984}
   - component: {fileID: 294642983}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TraceEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -907,7 +907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 560118450}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1512,7 +1512,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1032153412}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1544,7 +1544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1078729403}
   - component: {fileID: 1078729404}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1628,7 +1628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1208436634}
   - component: {fileID: 1208436635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dwarf3(fixed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1711,7 +1711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412743475}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1823,7 +1823,7 @@ GameObject:
   - component: {fileID: 1455215476}
   - component: {fileID: 1455215475}
   - component: {fileID: 1455215477}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2208,7 +2208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1620515277}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2370,7 +2370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1746638729}
   - component: {fileID: 1746638730}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dwarf1(fixed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2492,7 +2492,7 @@ GameObject:
   - component: {fileID: 1966428977}
   - component: {fileID: 1966428976}
   - component: {fileID: 1966428975}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ReconEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2611,7 +2611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2028831751}
   - component: {fileID: 2028831752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ToyGun(fixed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2695,7 +2695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2123509421}
   - component: {fileID: 2123509422}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
