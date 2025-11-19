@@ -157,11 +157,13 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             UpdateEquipUI(); // 인벤 열 때 UI 상태 갱신
+            Time.timeScale = 0.2f; // 인벤토리를 열었을 때 시간 느리게 하기(원하는 값으로 조정가능)
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            Time.timeScale = 1f; // 인벤토리를 닫았을 때 시간을 다시 되돌리기
         }
     }
 }
