@@ -21,6 +21,10 @@ public class RangedEnemy : MonoBehaviour
     public int maxHP = 5;
     public int currentHP;
 
+    [Header("마나 설정")]
+    public int manaReward = 10;
+    private PlayerController playerController;
+
     private Transform player;
     private float lastAttackTime;
 
@@ -29,11 +33,19 @@ public class RangedEnemy : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+       
+            playerController = playerObject.GetComponent<PlayerController>();
+        }
+
         lastAttackTime = -attackCooldown;
         currentHP = maxHP;
         rb = GetComponent<Rigidbody2D>();
     }
+
     void FixedUpdate()
     {
         if (player == null) return;
@@ -117,6 +129,13 @@ public class RangedEnemy : MonoBehaviour
 
     void Die()
     {
+        // 마나 획득 로직 추가
+        if (playerController != null)
+        {
+            // 플레이어의 RestoreMana 함수를 호출하여 마나 보상 제공
+            playerController.RestoreMana(manaReward);
+        }
+
         Destroy(gameObject);
     }
 }
