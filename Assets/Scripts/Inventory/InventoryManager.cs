@@ -120,9 +120,8 @@ public class InventoryManager : MonoBehaviour
         if (newItem.weaponPrefab != null && weaponHolder != null)
         {
             currentWeaponObject = Instantiate(newItem.weaponPrefab, weaponHolder);
-            // 위치와 회전을 0으로 초기화 (손 위치에 딱 붙게)
+            // 위치 0으로 초기화 (손 위치에 딱 붙게)
             currentWeaponObject.transform.localPosition = Vector3.zero;
-            currentWeaponObject.transform.localRotation = Quaternion.identity;
         }
 
         // 4. UI 업데이트 (장착된 슬롯에만 테두리 표시)

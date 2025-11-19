@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 5919291879697653050}
   - component: {fileID: 4820055697038897399}
   - component: {fileID: 2100613950109085073}
+  - component: {fileID: 2109854388288334191}
   m_Layer: 0
   m_Name: Candy
   m_TagString: Untagged
@@ -133,3 +134,24 @@ MonoBehaviour:
   attackRange: 1.5
   attackRate: 0.5
   enemyTag: Enemy
+--- !u!95 &2109854388288334191
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537969873211773782}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2644e857bb13df542a40e2a7d356f49a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
