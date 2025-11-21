@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 802789160}
   - component: {fileID: 802789162}
   - component: {fileID: 802789163}
+  - component: {fileID: 802789164}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Untagged
@@ -478,6 +479,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &802789164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802789159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a7d7fe57e4bea4c8321018ec84e0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: test
 --- !u!1 &1246166755
 GameObject:
   m_ObjectHideFlags: 0
