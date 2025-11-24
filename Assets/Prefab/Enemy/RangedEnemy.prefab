@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 53139421722776215}
   - component: {fileID: 4941694174565757647}
   - component: {fileID: 113136291637724628}
-  - component: {fileID: 9030652953478224876}
+  - component: {fileID: 3315202390991476017}
   m_Layer: 8
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -165,12 +165,12 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &9030652953478224876
-BoxCollider2D:
+--- !u!70 &3315202390991476017
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -201,19 +201,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.58, y: 2.7}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.06, y: 0}
+  m_Size: {x: 1.67, y: 3.07}
+  m_Direction: 0
 --- !u!1 &6790011695887322036
 GameObject:
   m_ObjectHideFlags: 0
