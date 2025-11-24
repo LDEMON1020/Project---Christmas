@@ -8,6 +8,17 @@ public class PlayerShoot : MonoBehaviour
     public Transform firePoint;         // 총알이 나가는 위치
     public float fireForce = 20f;       // 초기 발사 속도
 
+    void Start()
+    {
+        //발사 위치(firePoint)를 찾음
+        GameObject findPoint = GameObject.Find("PlayerFirePoint");
+
+        if (findPoint != null)
+        {
+            firePoint = findPoint.transform;
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 좌클릭 = 발사
