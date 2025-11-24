@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainSceneManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class MainSceneManager : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -16,7 +20,7 @@ public class MainSceneManager : MonoBehaviour
             if (hit.collider != null)
             {
                 // 클릭된 오브젝트가 targetObject인지 확인
-                if (hit.collider.gameObject == targetObject)
+                if (hit.collider != null && hit.collider.gameObject == gameObject)
                 {
                     SceneManager.LoadScene(sceneName);
                 }
