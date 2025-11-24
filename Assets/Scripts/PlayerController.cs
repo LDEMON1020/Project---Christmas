@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     public CandyAttack candyAttack;
 
+    public GameObject gameOverPanel;        //게임 오버 판넬
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -131,6 +133,7 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        gameOverPanel.SetActive(true);
     }
 
     // 마나를 회복하는 함수
