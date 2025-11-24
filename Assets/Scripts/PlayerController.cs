@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
-    
+        Run();
     }
     void Move()
     {
@@ -152,7 +152,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void Run()
+    {
+        if (isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed = 10f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            moveSpeed = 5f;
+        }
+    }
 
 
 
