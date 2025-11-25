@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StageChoiceScene.unity
     guid: 49cb706b535d4a64c9fb8d59b731bde9
+  - enabled: 1
+    path: Assets/Scenes/ShopScene.unity
+    guid: e46de7b5189403843bc3b574ef9f5e8c
   m_configObjects: {}
