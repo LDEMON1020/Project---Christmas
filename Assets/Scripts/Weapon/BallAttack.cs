@@ -36,14 +36,15 @@ public class BallAttack : MonoBehaviour
 
         // 폭발 프리팹 생성
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        
-        yield return new WaitForFixedUpdate();
 
-        // 원형 범위 안 적 체크
+        // 폭발 프리팹의 Collider를 트리거로 강제 설정
         CircleCollider2D col = explosion.GetComponent<CircleCollider2D>();
+        if (col != null) col.isTrigger = true;
+
+        // 트리거 범위 안 적 체크
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
-            explosion.transform.position, // 중심
-            col.radius                    // 반지름
+            explosion.transform.position,
+            col.radius
         );
 
         foreach (Collider2D enemy in hitEnemies)

@@ -38575,6 +38575,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 416820268443479065, guid: 4bf82091c26db3741848844aef25d609, type: 3}
+      propertyPath: maxHP
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4798367704074169447, guid: 4bf82091c26db3741848844aef25d609, type: 3}
       propertyPath: m_Name
       value: ReconEnemy
