@@ -34,19 +34,27 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        // 추적 범위 내에 있으면 계속 따라감
         if (distanceToPlayer < TraceRange)
         {
-            float direction = Mathf.Sign(player.position.x - transform.position.x);
-            rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
+            float direction = player.position.x - transform.position.x;
 
-            // 바라보는 방향 전환
-            if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
-                Flip();
+            // 플레이어가 너무 가까우면 방향 전환 X
+            float flipDeadZone = 0.1f; // 이 범위 내면 방향 안 바꿈
+            if (Mathf.Abs(direction) > flipDeadZone)
+            {
+                rb.velocity = new Vector2(Mathf.Sign(direction) * moveSpeed, rb.velocity.y);
+
+                if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
+                    Flip();
+            }
+            else
+            {
+                // 너무 가까우면 멈춤
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
         }
         else
         {
-            // 너무 멀면 멈춤
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
