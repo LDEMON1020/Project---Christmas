@@ -133,10 +133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f47151790e64d4382af15da35a2af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  TraceRange: 8
+  moveSpeed: 3
+  TraceRange: 15
   maxHP: 20
-  manaReward: 5
 --- !u!50 &8268190117451078831
 Rigidbody2D:
   serializedVersion: 4

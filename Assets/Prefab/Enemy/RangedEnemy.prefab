@@ -134,14 +134,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  traceRange: 12
-  attackRange: 5
+  traceRange: 17
+  attackRange: 10
   attackCooldown: 1.5
   projectilePrefab: {fileID: 114727567617540133, guid: 07be6d11a4cc9d64cbb6d0dcc00d8615, type: 3}
   firePoint: {fileID: 2286139289679946464}
   maxHP: 5
   currentHP: 0
-  manaReward: 10
 --- !u!50 &113136291637724628
 Rigidbody2D:
   serializedVersion: 4

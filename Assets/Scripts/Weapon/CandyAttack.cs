@@ -14,6 +14,9 @@ public class CandyAttack : MonoBehaviour
     private Animator animator;
     private SpriteRenderer playerSR;   // 방향 판별용
 
+    [Header("시각 효과")]
+    public GameObject attackEffectPrefab;
+
     void Start()
     {
         animator = GetComponentInParent<Animator>();
@@ -40,12 +43,18 @@ public class CandyAttack : MonoBehaviour
 
     void DoRaycast()
     {
-        // 플레이어가 바라보는 방향
         Vector2 dir = playerSR.flipX ? Vector2.left : Vector2.right;
 
-        // 레이캐스트
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, attackRange);
+        // 범위 이펙트 생성
+        if (attackEffectPrefab != null)
+        {
+            GameObject effect = Instantiate(attackEffectPrefab, (Vector2)transform.position + dir * attackRange / 2, Quaternion.identity);
+            effect.transform.localScale = new Vector3(attackRange, 1f, 1f); // 범위에 맞춰 크기 조절
+            Destroy(effect, 0.2f); // 0.2초 후 사라짐
+        }
 
+        // 실제 공격
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, attackRange);
         if (hit.collider != null)
         {
             if (hit.collider.CompareTag(enemyTag))
