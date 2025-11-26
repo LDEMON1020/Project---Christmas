@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         sr.color = Color.white;
     }
 
-    void Die()
+   public void Die()
     {
         Destroy(gameObject);
         gameOverPanel.SetActive(true);
