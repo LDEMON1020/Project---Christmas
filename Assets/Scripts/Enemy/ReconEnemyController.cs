@@ -12,10 +12,6 @@ public class ReconEnemyController : MonoBehaviour
     public int maxHP = 20;
     public int currentHP;
 
-    [Header("마나 설정")]
-    public int manaReward = 10;
-    private PlayerController playerController;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,7 +20,6 @@ public class ReconEnemyController : MonoBehaviour
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
-            playerController = playerObject.GetComponent<PlayerController>();
         }
     }
     void FixedUpdate()
@@ -62,11 +57,6 @@ public class ReconEnemyController : MonoBehaviour
 
     void Die()
     {
-        if (playerController != null)
-        {
-            playerController.RestoreMana(manaReward);
-        }
-
         Destroy(gameObject);
     }
 }

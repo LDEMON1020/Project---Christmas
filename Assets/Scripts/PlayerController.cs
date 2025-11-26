@@ -16,10 +16,6 @@ public class PlayerController : MonoBehaviour
     private int currentHP;
     public Slider hpSlider;
 
-    [Header("플레이어 마나 시스템")] 
-    public int maxMana = 100;
-    private int currentMana;
-    public Slider manaSlider;
 
     private Rigidbody2D rb;
     public SpriteRenderer candySr;
@@ -40,14 +36,6 @@ public class PlayerController : MonoBehaviour
 
         currentHP = maxHP;
         hpSlider.value = 1f;
-
-        currentMana = maxMana;
-        if (manaSlider != null)
-        {
-            manaSlider.maxValue = maxMana;
-            manaSlider.value = currentMana;
-        }
-
     }
 
  
@@ -100,22 +88,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool ConsumeMana(int amount) // amount 인수를 int로 변경
-    {
-        if (currentMana >= amount)
-        {
-            currentMana -= amount;
-
-            // 마나 UI 업데이트 (int 값을 슬라이더에 직접 반영)
-            if (manaSlider != null)
-            {
-                manaSlider.value = currentMana;
-            }
-            return true; // 마나 소모 성공
-        }
-
-        return false; // 마나 부족으로 소모 실패
-    }
 
     // 데미지 플래시 효과 코루틴
     IEnumerator DamageFlash()
@@ -136,21 +108,6 @@ public class PlayerController : MonoBehaviour
         gameOverPanel.SetActive(true);
     }
 
-    // 마나를 회복하는 함수
-    public void RestoreMana(int amount) // int 마나 시스템을 가정
-    {
-        currentMana += amount;
-        if (currentMana > maxMana)
-        {
-            currentMana = maxMana;
-        }
-
-        // 마나 UI 업데이트
-        if (manaSlider != null)
-        {
-            manaSlider.value = currentMana;
-        }
-    }
 
     public void Run()
     {

@@ -15,18 +15,13 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     public int maxHP = 20;
     private int currentHP;
 
-    [Header("마나 설정")]
-    public int manaReward = 10;
-    private PlayerController playerController;
-
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
-       
-            playerController = playerObject.GetComponent<PlayerController>();
+      
         }
 
         rb = GetComponent<Rigidbody2D>();
@@ -71,13 +66,6 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
     void Die()
     {
-    
-        if (playerController != null)
-        {
-        
-            playerController.RestoreMana(manaReward);
-        }
-
         Destroy(gameObject);
     }
 }

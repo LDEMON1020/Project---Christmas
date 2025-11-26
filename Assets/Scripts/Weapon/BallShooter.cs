@@ -9,10 +9,7 @@ public class BallShooter : MonoBehaviour
     public float shootPower = 10f;       // 발사 속도
     public float shootAngle = 45f;       // 발사 각도
 
-    public int manaCost = 10;
-
     private Transform playerTransform;
-    private PlayerController playerController;
 
     private void Start()
     {
@@ -29,7 +26,6 @@ public class BallShooter : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
-            playerController = player.GetComponent<PlayerController>();
         }
     }
 
@@ -37,24 +33,10 @@ public class BallShooter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CheckAndShoot();
+            Shoot();
         }
     }
 
-    void CheckAndShoot()
-    {
-       
-        if (playerController == null)
-        {
-            Shoot();
-            return;
-        }
-        if (playerController.ConsumeMana(manaCost))
-        {
-        
-            Shoot();
-        }
-    }
 
     void Shoot()
     {
