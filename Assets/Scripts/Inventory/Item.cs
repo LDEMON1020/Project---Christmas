@@ -9,9 +9,6 @@ public class Item : ScriptableObject
     public Sprite itemIcon;
     public GameObject weaponPrefab;
 
-    public int damage;
-    public float attackRate;
-
     public WeaponType weaponType;
 
     public enum WeaponType

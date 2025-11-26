@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Candy
   m_EditorClassIdentifier: 
   itemName: Candy
-  itemIcon: {fileID: 21300000, guid: 799955f8c98c9464c848e01986f93e20, type: 3}
+  itemIcon: {fileID: 21300000, guid: dc337fd40cf36a24baac17a61a6680e3, type: 3}
   weaponPrefab: {fileID: 8537969873211773782, guid: 5c083c2e813257d40b9d679a4c16c8f4, type: 3}
-  damage: 5
-  attackRate: 5
   weaponType: 0
