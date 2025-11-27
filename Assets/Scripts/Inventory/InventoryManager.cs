@@ -106,7 +106,6 @@ public class InventoryManager : MonoBehaviour
     {
         //이미 같은 걸 끼고 있다면 무시
         if (currentEquippedItem == newItem) return;
-
         currentEquippedItem = newItem;
 
         //기존에 들고 있던 무기 오브젝트 파괴
@@ -121,6 +120,9 @@ public class InventoryManager : MonoBehaviour
             currentWeaponObject = Instantiate(newItem.weaponPrefab, weaponHolder);
             // 위치 0으로 초기화 (손 위치에 딱 붙게)
             currentWeaponObject.transform.localPosition = Vector3.zero;
+
+            inventoryUI.SetActive(false);
+            Time.timeScale = 1f; // 인벤토리를 닫고 시간을 정상으로 돌리기
         }
 
         // 4. UI 업데이트 (장착된 슬롯에만 테두리 표시)
