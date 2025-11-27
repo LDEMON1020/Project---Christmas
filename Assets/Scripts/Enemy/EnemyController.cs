@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     private Rigidbody2D rb;
     private bool isFacingRight = true;
 
+    public CoinData coinData;
+
     [Header("체력 시스템")]
     public int maxHP = 20;
     private int currentHP;
@@ -72,6 +74,14 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
     void Die()
     {
+        DropCoin();
         Destroy(gameObject);
+    }
+
+    void DropCoin()
+    {
+        GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
+
+        coin.GetComponent<CoinItem>().coinData = coinData;
     }
 }
