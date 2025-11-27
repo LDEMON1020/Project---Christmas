@@ -10,12 +10,14 @@ public class BallShooter : MonoBehaviour
     private Transform playerTransform;
 
 
-    [Header("인벤토리 참조")]
+    [Header("기타 참조")]
     public InventoryManager inventoryManager;
+    public GoalObject goalObject;
 
     void Awake()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
+       goalObject = FindObjectOfType<GoalObject>();
 
         if (inventoryManager == null)
         {
@@ -45,9 +47,12 @@ public class BallShooter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (inventoryManager.isInventoryOpen == false)
+            if (goalObject.isGameClear == false)
             {
-                Shoot();
+                if (inventoryManager.isInventoryOpen == false)
+                {
+                    Shoot();
+                }
             }
         }
     }

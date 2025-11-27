@@ -14,12 +14,14 @@ public class CandyAttack : MonoBehaviour
 
     [Header("시각 효과")]
     public GameObject attackEffectPrefab;
-    [Header("인벤토리 참조")]
+    [Header("기타 참조")]
     public InventoryManager inventoryManager;
+    public GoalObject goalObject;
 
     void Awake()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
+        goalObject = FindObjectOfType<GoalObject>();
 
         if (inventoryManager == null)
         {
@@ -36,10 +38,13 @@ public class CandyAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime)
         {
-            if (inventoryManager.isInventoryOpen == false)
+            if (goalObject.isGameClear == false)
             {
-                Attack();
-                nextAttackTime = Time.time + attackRate;
+                if (inventoryManager.isInventoryOpen == false)
+                {
+                    Attack();
+                    nextAttackTime = Time.time + attackRate;
+                }
             }
         }
     }

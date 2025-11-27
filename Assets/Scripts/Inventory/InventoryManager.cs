@@ -24,6 +24,7 @@ public class InventoryManager : MonoBehaviour
     public KeyCode inventoryKey = KeyCode.I;
     public List<InventorySlot> slots = new List<InventorySlot>();
     public bool isInventoryOpen = false;
+    public GoalObject goalObject;
 
     private void Awake()
     {
@@ -42,8 +43,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(inventoryKey))
         {
-            isInventoryOpen = !isInventoryOpen;
-            ToggleInventory();
+            if (goalObject.isGameClear == false)
+            {
+                isInventoryOpen = !isInventoryOpen;
+                ToggleInventory();
+            }
         }
     }
 
