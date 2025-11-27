@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject gameOverPanel;        //게임 오버 판넬
 
+    private bool isInvincible; // 무적 상태 여부
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -71,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isInvincible) return;  // 무적이면 데미지 안 받음
+
         currentHP -= damage;
         hpSlider.value = (float)currentHP / maxHP;
 
@@ -101,10 +105,10 @@ public class PlayerController : MonoBehaviour
     }
 
    public void Die()
-    {
+   {
         Destroy(gameObject);
         gameOverPanel.SetActive(true);
-    }
+   }
 
 
     public void Run()
@@ -119,6 +123,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Cake"))
+        {
+            // 3초 동안 무적
+            StartCoroutine(InvincibleTime(3f));
 
+            Destroy(collision.gameObject);
+        }
+    }
 
+    public IEnumerator InvincibleTime(float duration)
+    {
+        isInvincible = true;
+        
+        yield return new WaitForSeconds(duration);
+
+        isInvincible = false;
+    }
 }
