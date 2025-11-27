@@ -10,6 +10,8 @@ public class ReconEnemyController : MonoBehaviour
     public int maxHP = 20;
     public int currentHP;
 
+    public CoinData coinData;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,6 +57,15 @@ public class ReconEnemyController : MonoBehaviour
 
     void Die()
     {
+        DropCoin();
         Destroy(gameObject);
+    }
+
+    void DropCoin()
+    {
+        Debug.Log("DropCoin() ½ÇÇàµÊ");
+        GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
+
+        coin.GetComponent<CoinItem>().coinData = coinData;
     }
 }

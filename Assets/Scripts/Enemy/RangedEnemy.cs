@@ -25,6 +25,8 @@ public class RangedEnemy : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight = true;
 
+    public CoinData coinData;
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -121,6 +123,14 @@ public class RangedEnemy : MonoBehaviour
 
     void Die()
     {
+        DropCoin();
         Destroy(gameObject);
+    }
+
+    void DropCoin()
+    {
+        GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
+
+        coin.GetComponent<CoinItem>().coinData = coinData;
     }
 }

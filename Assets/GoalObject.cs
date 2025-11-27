@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class GoalObject : MonoBehaviour
 {
+    public bool isGameClear = false;
     public GameObject GameClearPanel;
     // Start is called before the first frame update
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            isGameClear = true;
             PlayerController pc = other.GetComponent<PlayerController>();
             if (pc != null)
             {
