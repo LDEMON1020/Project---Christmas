@@ -14,7 +14,18 @@ public class CandyAttack : MonoBehaviour
 
     [Header("시각 효과")]
     public GameObject attackEffectPrefab;
+    [Header("인벤토리 참조")]
+    public InventoryManager inventoryManager;
 
+    void Awake()
+    {
+        inventoryManager = FindObjectOfType<InventoryManager>();
+
+        if (inventoryManager == null)
+        {
+            Debug.LogError("Inventory Manager 컴포넌트(타입: " + typeof(InventoryManager).Name + ")를 씬에서 찾을 수 없습니다.");
+        }
+    }
     void Start()
     {
         animator = GetComponentInParent<Animator>();
@@ -25,8 +36,11 @@ public class CandyAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime)
         {
-            Attack();
-            nextAttackTime = Time.time + attackRate;
+            if (inventoryManager.isInventoryOpen == false)
+            {
+                Attack();
+                nextAttackTime = Time.time + attackRate;
+            }
         }
     }
 

@@ -9,6 +9,20 @@ public class BallShooter : MonoBehaviour
 
     private Transform playerTransform;
 
+
+    [Header("인벤토리 참조")]
+    public InventoryManager inventoryManager;
+
+    void Awake()
+    {
+        inventoryManager = FindObjectOfType<InventoryManager>();
+
+        if (inventoryManager == null)
+        {
+            Debug.LogError("Inventory Manager 컴포넌트(타입: " + typeof(InventoryManager).Name + ")를 씬에서 찾을 수 없습니다.");
+        }
+    }
+
     private void Start()
     {
         //발사 위치(firePoint)를 찾음
@@ -31,7 +45,10 @@ public class BallShooter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            if (inventoryManager.isInventoryOpen == false)
+            {
+                Shoot();
+            }
         }
     }
 

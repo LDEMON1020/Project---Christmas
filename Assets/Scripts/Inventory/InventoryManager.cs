@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     [Header("Input")]
     public KeyCode inventoryKey = KeyCode.I;
     public List<InventorySlot> slots = new List<InventorySlot>();
-    private bool isInventoryOpen = false;
+    public bool isInventoryOpen = false;
 
     private void Awake()
     {
@@ -42,6 +42,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(inventoryKey))
         {
+            isInventoryOpen = !isInventoryOpen;
             ToggleInventory();
         }
     }
@@ -123,6 +124,7 @@ public class InventoryManager : MonoBehaviour
 
             inventoryUI.SetActive(false);
             Time.timeScale = 1f; // 인벤토리를 닫고 시간을 정상으로 돌리기
+            isInventoryOpen = false; // 인벤토리 상태 동기화
         }
 
         // 4. UI 업데이트 (장착된 슬롯에만 테두리 표시)
@@ -149,7 +151,6 @@ public class InventoryManager : MonoBehaviour
 
     public void ToggleInventory()
     {
-        isInventoryOpen = !isInventoryOpen;
         inventoryUI.SetActive(isInventoryOpen);
 
         if (isInventoryOpen)
