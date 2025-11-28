@@ -6,7 +6,21 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject Prefab; 
     public Transform firePoint;        
-    public float fireForce = 20f;      
+    public float fireForce = 20f;
+
+    public InventoryManager inventoryManager;
+    public GoalObject goalObject;
+
+    void Awake()
+    {
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        goalObject = FindObjectOfType<GoalObject>();
+
+        if (inventoryManager == null)
+        {
+            Debug.LogError("Inventory Manager 컴포넌트(타입: " + typeof(InventoryManager).Name + ")를 씬에서 찾을 수 없습니다.");
+        }
+    }
 
     void Start()
     {
@@ -22,7 +36,13 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) 
         {
-            Shoot();
+            if (goalObject.isGameClear == false)
+            {
+                if (inventoryManager.isInventoryOpen == false)
+                {
+                    Shoot();
+                }
+            }
         }
     }
 

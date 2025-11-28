@@ -39,8 +39,11 @@ public class GingerCookie : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Enemy가 아닌 경우 무시하고 벽 관통
-        if(other.CompareTag("Enemy"))
-        Destroy(gameObject);
+        if (other.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+            Debug.Log("충돌: " + other.name);
+        }
     }
 
     //사용 방법
