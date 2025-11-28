@@ -25,6 +25,7 @@ public class InventoryManager : MonoBehaviour
     public List<InventorySlot> slots = new List<InventorySlot>();
     public bool isInventoryOpen = false;
     public GoalObject goalObject;
+    public GameObject Player;
 
     private void Awake()
     {
@@ -45,8 +46,11 @@ public class InventoryManager : MonoBehaviour
         {
             if (goalObject.isGameClear == false)
             {
-                isInventoryOpen = !isInventoryOpen;
-                ToggleInventory();
+                if (Player != null)
+                {
+                    isInventoryOpen = !isInventoryOpen;
+                    ToggleInventory();
+                }
             }
         }
     }

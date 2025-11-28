@@ -39866,6 +39866,7 @@ MonoBehaviour:
   slots: []
   isInventoryOpen: 0
   goalObject: {fileID: 1526165062}
+  Player: {fileID: 1496962999}
 --- !u!4 &1248477343
 Transform:
   m_ObjectHideFlags: 0
