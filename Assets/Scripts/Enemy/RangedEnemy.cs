@@ -27,6 +27,9 @@ public class RangedEnemy : MonoBehaviour
 
     public CoinData coinData;
 
+    private bool isKnockback = false;
+    private float knockbackDuration = 0.3f;  // 넉백 유지 시간
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -42,6 +45,8 @@ public class RangedEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isKnockback) return; // 넉백 중이면 이동하지 않음
+
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -132,5 +137,21 @@ public class RangedEnemy : MonoBehaviour
         GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
 
         coin.GetComponent<CoinItem>().coinData = coinData;
+    }
+
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        if (rb == null) return;
+
+        isKnockback = true;
+        rb.velocity = Vector2.zero; // 기존 이동 초기화
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
+
+        Invoke(nameof(EndKnockback), knockbackDuration);
+    }
+
+    void EndKnockback()
+    {
+        isKnockback = false;
     }
 }

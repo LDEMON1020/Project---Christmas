@@ -11,6 +11,9 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
     public CoinData coinData;
 
+    private bool isKnockback = false;
+    private float knockbackDuration = 0.3f;  // 넉백 유지 시간
+
     [Header("체력 시스템")]
     public int maxHP = 20;
     private int currentHP;
@@ -30,6 +33,8 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
     void FixedUpdate()
     {
+        if (isKnockback) return; // 넉백 중이면 이동하지 않음
+
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -83,5 +88,21 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
         GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
 
         coin.GetComponent<CoinItem>().coinData = coinData;
+    }
+
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        if (rb == null) return;
+
+        isKnockback = true;
+        rb.velocity = Vector2.zero; // 기존 이동 초기화
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
+
+        Invoke(nameof(EndKnockback), knockbackDuration);
+    }
+
+    void EndKnockback()
+    {
+        isKnockback = false;
     }
 }

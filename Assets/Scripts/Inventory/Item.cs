@@ -17,7 +17,8 @@ public class Item : ScriptableObject
         Star,               //크리스마스 별
         Box,                //선물 상자
         Cake,               //크리스마스 케이크
-        Cookie              //진저 쿠키
+        Cookie,             //진저 쿠키
+        Glove               //넉백 장갑
     }
 }
 
