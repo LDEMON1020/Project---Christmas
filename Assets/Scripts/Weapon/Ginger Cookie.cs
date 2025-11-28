@@ -7,6 +7,12 @@ public class GingerCookie : MonoBehaviour
 
     private Vector2 direction;
 
+    public PlayerController player;
+
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerController>();
+    }
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
@@ -14,21 +20,26 @@ public class GingerCookie : MonoBehaviour
 
     void Start()
     {
+        // 플레이어가 바라보는 방향 결정
+        float facing = player.transform.localScale.x;
+
+        if (facing < 0)
+            direction = Vector2.left;
+        else
+            direction = Vector2.right;
+
         Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+            transform.Translate(direction * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Enemy가 아닌 경우 무시하고 벽 관통
-        if (!other.CompareTag("Enemy"))
-            return;
-
-        Destroy(other.gameObject);
+        if(other.CompareTag("Enemy"))
         Destroy(gameObject);
     }
 
