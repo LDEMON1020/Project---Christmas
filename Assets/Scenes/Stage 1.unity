@@ -39862,6 +39862,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f646d0d7c3714484da98b024d64075ca, type: 2}
   - {fileID: 11400000, guid: 8da768333aa34a1408c34b44615fd156, type: 2}
   - {fileID: 11400000, guid: a9a6595c20d96144aa2b1c559649024b, type: 2}
+  - {fileID: 11400000, guid: f35ddd0fd4c9c484a86508e8400fce6d, type: 2}
   inventoryKey: 101
   slots: []
   isInventoryOpen: 0

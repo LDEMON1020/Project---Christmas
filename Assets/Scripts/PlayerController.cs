@@ -142,4 +142,32 @@ public class PlayerController : MonoBehaviour
 
         isInvincible = false;
     }
+
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        if (currentHP > maxHP) currentHP = maxHP;
+
+        hpSlider.value = (float)currentHP / maxHP;
+
+        StartCoroutine(HealEffectCoroutine());
+    }
+
+    IEnumerator HealEffectCoroutine()
+    {
+        Color originalColor = sr.color;
+        Color healColor = new Color(0.3f, 1f, 0.3f, 0.5f);
+
+        int blinkCount = 6;
+        float blinkTime = 0.1f;
+
+        for (int i = 0; i < blinkCount; i++)
+        {
+            sr.color = healColor;
+            yield return new WaitForSeconds(blinkTime);
+
+            sr.color = originalColor;
+            yield return new WaitForSeconds(blinkTime);
+        }
+    }
 }

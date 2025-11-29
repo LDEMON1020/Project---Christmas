@@ -18,7 +18,8 @@ public class Item : ScriptableObject
         Box,                //¼±¹° »óÀÚ
         Cake,               //Å©¸®½º¸¶½º ÄÉÀÌÅ©
         Cookie,             //ÁøÀú ÄíÅ°
-        Glove               //³Ë¹é Àå°©
+        Glove,              //³Ë¹é Àå°©
+        Cocoa               //ÄÚÄÚ¾Æ
     }
 }
 
