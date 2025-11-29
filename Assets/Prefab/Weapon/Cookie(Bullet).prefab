@@ -101,6 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   lifeTime: 3
+  Damage: 20
+  attackRate: 0.5
+  traceRange: 5
   player: {fileID: 0}
 --- !u!61 &-7030348911122361152
 BoxCollider2D:
