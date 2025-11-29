@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedEnemy : MonoBehaviour
+public class RangedEnemy : MonoBehaviour, IStunnable
 {
     public enum EnemyState { Idle, Trace, Attack }
     private EnemyState state = EnemyState.Idle;
@@ -30,6 +30,12 @@ public class RangedEnemy : MonoBehaviour
     private bool isKnockback = false;
     private float knockbackDuration = 0.3f;  // 넉백 유지 시간
 
+    // 스턴 관련 변수 추가
+    private bool isStunned = false;    // 기절 상태 여부
+    private float stunEndTime = 0f;    // 기절 종료 시간
+
+    public bool IsStunned => isStunned; // 외부(공격 스크립트 등)에서 스턴 여부 확인용
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -45,6 +51,13 @@ public class RangedEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        // 기절 중이면 이동·추적·공격 전부 중단 
+        if (isStunned)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         if (isKnockback) return; // 넉백 중이면 이동하지 않음
 
         if (player == null) return;
@@ -74,8 +87,18 @@ public class RangedEnemy : MonoBehaviour
                     state = EnemyState.Trace;
                 else
                     AttackPlayer();
+
                 rb.velocity = new Vector2(0, rb.velocity.y); // 공격 중 정지
                 break;
+        }
+    }
+
+    void Update()
+    {
+        // 스턴 해제 처리 
+        if (isStunned && Time.time >= stunEndTime)
+        {
+            isStunned = false;
         }
     }
 
@@ -91,6 +114,9 @@ public class RangedEnemy : MonoBehaviour
 
     void AttackPlayer()
     {
+        // 기절 중이면 공격 금지 
+        if (isStunned) return;
+
         if (Time.time >= lastAttackTime + attackCooldown)
         {
             lastAttackTime = Time.time;
@@ -153,5 +179,14 @@ public class RangedEnemy : MonoBehaviour
     void EndKnockback()
     {
         isKnockback = false;
+    }
+
+    // 스턴 함수 (ChristmasBell에서 호출됨)
+    public void Stun(float duration)
+    {
+        isStunned = true;
+        stunEndTime = Time.time + duration;
+
+        rb.velocity = Vector2.zero; // 즉시 멈춤
     }
 }

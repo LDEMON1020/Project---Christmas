@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Ground
   - Cake
+  - Bell
   layers:
   - Default
   - TransparentFX

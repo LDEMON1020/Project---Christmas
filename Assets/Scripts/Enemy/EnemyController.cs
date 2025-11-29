@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour            //추격용 난쟁이
+public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
 {
-    public float moveSpeed = 2f;      // 이동 속도
-    public float TraceRange = 8f;     // 추적 범위
+    public float moveSpeed = 2f;      
+    public float TraceRange = 8f;     
 
     private Transform player;
     private Rigidbody2D rb;
@@ -12,20 +12,21 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     public CoinData coinData;
 
     private bool isKnockback = false;
-    private float knockbackDuration = 0.3f;  // 넉백 유지 시간
+    private float knockbackDuration = 0.3f;
 
     [Header("체력 시스템")]
     public int maxHP = 20;
     private int currentHP;
 
+    // 스턴 시스템 추가 
+    private bool isStunned = false;
+    private float stunEndTime = 0f;
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
-        {
             player = playerObject.transform;
-      
-        }
 
         rb = GetComponent<Rigidbody2D>();
         currentHP = maxHP;
@@ -33,8 +34,15 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
 
     void FixedUpdate()
     {
-        if (isKnockback) return; // 넉백 중이면 이동하지 않음
+        //  스턴 중이면 완전 정지
+        if (isStunned)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
 
+        // 넉백 중이면 이동 중지
+        if (isKnockback) return;
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -43,8 +51,7 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
         {
             float direction = player.position.x - transform.position.x;
 
-            // 플레이어가 너무 가까우면 방향 전환 X
-            float flipDeadZone = 0.1f; // 이 범위 내면 방향 안 바꿈
+            float flipDeadZone = 0.1f;
             if (Mathf.Abs(direction) > flipDeadZone)
             {
                 rb.velocity = new Vector2(Mathf.Sign(direction) * moveSpeed, rb.velocity.y);
@@ -54,7 +61,6 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
             }
             else
             {
-                // 너무 가까우면 멈춤
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }
@@ -62,6 +68,13 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
+    }
+
+    void Update()
+    {
+        //스턴 시간 체크
+        if (isStunned && Time.time >= stunEndTime)
+            isStunned = false;
     }
 
     void Flip()
@@ -86,7 +99,6 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     void DropCoin()
     {
         GameObject coin = Instantiate(coinData.coinPrefab, transform.position, Quaternion.identity);
-
         coin.GetComponent<CoinItem>().coinData = coinData;
     }
 
@@ -95,7 +107,7 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
         if (rb == null) return;
 
         isKnockback = true;
-        rb.velocity = Vector2.zero; // 기존 이동 초기화
+        rb.velocity = Vector2.zero;
         rb.AddForce(direction * force, ForceMode2D.Impulse);
 
         Invoke(nameof(EndKnockback), knockbackDuration);
@@ -104,5 +116,14 @@ public class EnemyController : MonoBehaviour            //추격용 난쟁이
     void EndKnockback()
     {
         isKnockback = false;
+    }
+
+    //여기서 StunCircle이 사용하는 핵심 기능
+    public void Stun(float duration)
+    {
+        isStunned = true;
+        stunEndTime = Time.time + duration;
+
+        rb.velocity = Vector2.zero;  // 즉시 멈춤
     }
 }

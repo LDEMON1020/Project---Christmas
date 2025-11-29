@@ -14,8 +14,15 @@ public class PlayerController : MonoBehaviour
     private int currentHP;
     public Slider hpSlider;
 
+    [Header("크리스마스 벨 시스템")]
+    public GameObject stunCirclePrefab;  // Bell Circle 프리팹
+    public float stunCircleDuration = 5f;
+    public float stunDuration = 2f;
+
 
     private Rigidbody2D rb;
+
+    [Header("플레이어 스프라이트")] // 위의 헤더하고 같이 나와서 구분 하는 용도
     public SpriteRenderer candySr;
     public SpriteRenderer sr;
   
@@ -132,6 +139,12 @@ public class PlayerController : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
+
+        if (collision.CompareTag("Bell"))
+        {
+            SpawnStunCircle();
+            Destroy(collision.gameObject); // 아이템 삭제
+        }
     }
 
     public IEnumerator InvincibleTime(float duration)
@@ -170,4 +183,19 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(blinkTime);
         }
     }
+
+    void SpawnStunCircle()
+    {
+        GameObject circle = Instantiate(
+            stunCirclePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        ChristmasBell sc = circle.GetComponent<ChristmasBell>();
+        sc.target = this.transform;
+        sc.followDuration = stunCircleDuration; // 원 유지 시간
+        sc.stunDuration = stunDuration;         // 적 스턴 시간
+    }
+
 }
