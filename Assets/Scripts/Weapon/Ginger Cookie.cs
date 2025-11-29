@@ -1,9 +1,15 @@
+ï»¿using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class GingerCookie : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 3f;
+    public int Damage = 20;
+    public float attackRate = 0.5f;
+    private Transform target;
+    public float traceRange = 5f;
 
     private Vector2 direction;
 
@@ -20,8 +26,8 @@ public class GingerCookie : MonoBehaviour
 
     void Start()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ ¹Ù¶óº¸´Â ¹æÇâ °áÁ¤
         float facing = player.transform.localScale.x;
+        target = GetNearestEnemy();
 
         if (facing < 0)
             direction = Vector2.left;
@@ -33,22 +39,78 @@ public class GingerCookie : MonoBehaviour
 
     void Update()
     {
+        if (target != null)
+        {
+            float dist = Vector2.Distance(transform.position, target.position);
+
+            if (dist <= traceRange)
+            {
+                TraceEnemy();
+                return;
+            }
+        }
+      
             transform.Translate(direction * speed * Time.deltaTime);
+        
+    }
+
+    void TraceEnemy()
+    {
+        // íƒ€ê²Ÿì´ ì œê±°ë˜ì—ˆë‹¤ë©´ ìƒˆë¡œ ì°¾ê¸°
+        if (target == null)
+        {
+            target = GetNearestEnemy();
+        }
+
+        // íƒ€ê²Ÿ ë°©í–¥ìœ¼ë¡œ ì´ë™
+        Vector3 dir = (target.position - transform.position).normalized;
+        transform.position += dir * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Enemy°¡ ¾Æ´Ñ °æ¿ì ¹«½ÃÇÏ°í º® °üÅë
+        // Enemyê°€ ì•„ë‹Œ ê²½ìš° ë¬´ì‹œí•˜ê³  ë²½ ê´€í†µ
         if (other.CompareTag("Ground"))
         {
             Destroy(gameObject);
-            Debug.Log("Ãæµ¹: " + other.name);
+            Debug.Log("ì¶©ëŒ: " + other.name);
+        }
+
+        if(other.CompareTag("Enemy"))
+        {
+           
+              other.GetComponent<EnemyController>()?.TakeDamage(Damage);
+               other.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
+               other.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+            Destroy(gameObject);
         }
     }
 
-    //»ç¿ë ¹æ¹ý
-    //Àû ¿ÀºêÁ§Æ®¿¡°Ô "Enemy" ÅÂ±× ´Þ¾ÆÁÖ±â
-    //Àû ¿ÀºêÁ§Æ®ÀÇ Collider 2D ´Þ¾ÆÁÖ±â 
-    //ÀÌ ½ºÅ©¸³Æ®¸¦ »ç¿ëÇÒ ÇÁ¸®ÆÕ¿¡°Ô RigidBody2D ´Þ¾ÆÁÖ°í Gravity ScaleÀ» 0À¸·Î ÇØÁÖ±â
-    // ÇÁ¸®ÆÕÀÇ Collider 2D¸¦ ´Þ¾ÆÁÖ°í IsTrigger Ã¼Å©ÇÏ±â
+    Transform GetNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length == 0)
+            return null;
+
+        Transform nearest = null;
+        float nearestDist = Mathf.Infinity;
+
+        foreach (var e in enemies)
+        {
+            float dist = Vector2.Distance(transform.position, e.transform.position);
+            if (dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = e.transform;
+            }
+        }
+
+        return nearest;
+    }
+
+    //ì‚¬ìš© ë°©ë²•
+    //ì  ì˜¤ë¸Œì íŠ¸ì—ê²Œ "Enemy" íƒœê·¸ ë‹¬ì•„ì£¼ê¸°
+    //ì  ì˜¤ë¸Œì íŠ¸ì˜ Collider 2D ë‹¬ì•„ì£¼ê¸° 
+    //ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì‚¬ìš©í•  í”„ë¦¬íŒ¹ì—ê²Œ RigidBody2D ë‹¬ì•„ì£¼ê³  Gravity Scaleì„ 0ìœ¼ë¡œ í•´ì£¼ê¸°
+    // í”„ë¦¬íŒ¹ì˜ Collider 2Dë¥¼ ë‹¬ì•„ì£¼ê³  IsTrigger ì²´í¬í•˜ê¸°
 }
