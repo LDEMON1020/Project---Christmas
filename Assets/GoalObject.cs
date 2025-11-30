@@ -15,6 +15,8 @@ public class GoalObject : MonoBehaviour
             {
                 Time.timeScale = 0f; // 게임 일시정지
                 GameClearPanel.SetActive(true); // 게임 클리어 패널 활성화
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     }

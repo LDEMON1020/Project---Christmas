@@ -120,7 +120,9 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
         sr.sprite = deadSprite;   // 죽은 스프라이트로 교체
         gameOverPanel.SetActive(true);
-   }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
 
     public void Run()
