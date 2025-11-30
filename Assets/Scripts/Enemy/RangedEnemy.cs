@@ -36,6 +36,8 @@ public class RangedEnemy : MonoBehaviour, IStunnable
 
     public bool IsStunned => isStunned; // 외부(공격 스크립트 등)에서 스턴 여부 확인용
 
+    private Animator animator;
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -47,10 +49,14 @@ public class RangedEnemy : MonoBehaviour, IStunnable
         lastAttackTime = -attackCooldown;
         currentHP = maxHP;
         rb = GetComponent<Rigidbody2D>();
+
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+
         // 기절 중이면 이동·추적·공격 전부 중단 
         if (isStunned)
         {

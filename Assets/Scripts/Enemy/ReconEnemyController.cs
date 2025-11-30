@@ -15,6 +15,8 @@ public class ReconEnemyController : MonoBehaviour
     private bool isKnockback = false;
     private float knockbackDuration = 0.3f;  // 넉백 유지 시간
 
+    private Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,9 +26,13 @@ public class ReconEnemyController : MonoBehaviour
         if (playerObject != null)
         {
         }
+
+        animator = GetComponent<Animator>();
     }
     void FixedUpdate()
     {
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+
         if (isKnockback) return; // 넉백 중이면 이동하지 않음
 
         // 현재 바라보는 방향으로 계속 이동
