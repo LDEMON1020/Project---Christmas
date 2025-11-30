@@ -184,9 +184,13 @@ public class RangedEnemy : MonoBehaviour, IStunnable
     // 스턴 함수 (ChristmasBell에서 호출됨)
     public void Stun(float duration)
     {
+        // 이미 기절 중이면 새로운 Stun을 덮어쓰지 않음
+        if (isStunned)
+            return;
+
         isStunned = true;
         stunEndTime = Time.time + duration;
 
-        rb.velocity = Vector2.zero; // 즉시 멈춤
+        rb.velocity = Vector2.zero;
     }
 }

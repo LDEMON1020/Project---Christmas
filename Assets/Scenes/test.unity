@@ -1785,8 +1785,7 @@ MonoBehaviour:
   maxHP: 20
   hpSlider: {fileID: 1465919468}
   stunCirclePrefab: {fileID: 755509491669034187, guid: 35e4ea2cc8af28a4da07562e82c4ad6c, type: 3}
-  stunCircleDuration: 5
-  stunDuration: 2
+  stunCircleDuration: 1
   candySr: {fileID: 0}
   sr: {fileID: 2123509422}
   groundCheck: {fileID: 560118450}

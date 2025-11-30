@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 // 스턴 인터페이스 (다른 파일에도 있어도 됨. 중복되면 제거해도 됨)
 public interface IStunnable
@@ -20,6 +21,7 @@ public class ChristmasBell : MonoBehaviour
     private Rigidbody2D rb;
     private float spawnTime;
     public bool destroyAfterFollowEnds = true;
+    private HashSet<IStunnable> stunnedEnemies = new HashSet<IStunnable>();
 
     void Awake()
     {
@@ -46,16 +48,14 @@ public class ChristmasBell : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // enemyLayer를 설정했다면 필터링 실행
-        if (enemyLayer.value != 0 && (enemyLayer & (1 << other.gameObject.layer)) == 0)
-            return;
-
-        // 스턴 가능한 객체인지 확인
         IStunnable stunnable = other.GetComponent<IStunnable>();
         if (stunnable != null)
         {
+            if (stunnedEnemies.Contains(stunnable))
+                return;
+
+            stunnedEnemies.Add(stunnable);
             stunnable.Stun(stunDuration);
-            return;
         }
     }
 }

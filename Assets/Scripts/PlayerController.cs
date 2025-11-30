@@ -14,11 +14,8 @@ public class PlayerController : MonoBehaviour
     private int currentHP;
     public Slider hpSlider;
 
-    [Header("크리스마스 벨 시스템")]
+    [Header("크리스마스 벨 프리팹")]
     public GameObject stunCirclePrefab;  // Bell Circle 프리팹
-    public float stunCircleDuration = 5f;
-    public float stunDuration = 2f;
-
 
     private Rigidbody2D rb;
 
@@ -194,8 +191,6 @@ public class PlayerController : MonoBehaviour
 
         ChristmasBell sc = circle.GetComponent<ChristmasBell>();
         sc.target = this.transform;
-        sc.followDuration = stunCircleDuration; // 원 유지 시간
-        sc.stunDuration = stunDuration;         // 적 스턴 시간
     }
 
 }
