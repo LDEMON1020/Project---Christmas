@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
     private bool isStunned = false;
     private float stunEndTime = 0f;
 
+    private Animator animator;
+
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -30,16 +32,21 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
 
         rb = GetComponent<Rigidbody2D>();
         currentHP = maxHP;
+
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+
         //  스턴 중이면 완전 정지
         if (isStunned)
         {
             rb.velocity = Vector2.zero;
             return;
         }
+
 
         // 넉백 중이면 이동 중지
         if (isKnockback) return;

@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     [Header("플레이어 스프라이트")] // 위의 헤더하고 같이 나와서 구분 하는 용도
     public SpriteRenderer candySr;
     public SpriteRenderer sr;
-  
+    public Sprite deadSprite;     // 죽은 스프라이트
+
     [Header("땅 체크")]
     public Transform groundCheck;           //땅 체크용
     public float checkRadius = 0.2f;
@@ -34,9 +35,13 @@ public class PlayerController : MonoBehaviour
 
     private bool isInvincible; // 무적 상태 여부
 
+    private Animator animator;  
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
 
         currentHP = maxHP;
         hpSlider.value = 1f;
@@ -53,6 +58,8 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
 
         if (moveInput > 0)
             transform.localScale = new Vector3(1, 1, 1);
@@ -111,6 +118,7 @@ public class PlayerController : MonoBehaviour
    public void Die()
    {
         Destroy(gameObject);
+        sr.sprite = deadSprite;   // 죽은 스프라이트로 교체
         gameOverPanel.SetActive(true);
    }
 
