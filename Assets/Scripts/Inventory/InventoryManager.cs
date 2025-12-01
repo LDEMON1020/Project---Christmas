@@ -144,6 +144,13 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        // 개수가 0개인 아이템은 장착 불가
+        if (slotToEquip != null && slotToEquip.count <= 0)
+        {
+            Debug.Log("아이템 " + newItem.itemName + "의 개수가 0개이므로 장착할 수 없습니다.");
+            return;
+        }
+
         currentEquippedItem = newItem;
         currentEquippedSlot = slotToEquip; // 현재 슬롯 정보 저장
 
@@ -180,10 +187,10 @@ public class InventoryManager : MonoBehaviour
                 // 2. 갯수 감소 처리
                 currentEquippedSlot.UpdateCount(currentEquippedSlot.count - 1);
 
-                // 3. 갯수가 0이 되면 장착 해제 및 슬롯 비우기
+                // 3. 갯수가 0이 되면 장착 해제만 하고 슬롯은 유지
                 if (currentEquippedSlot.count <= 0)
                 {
-                    Debug.Log(currentEquippedItem.itemName + " 아이템을 모두 소모했습니다. 장착 해제합니다.");
+                    Debug.Log(currentEquippedItem.itemName + " 아이템을 모두 소모했습니다. 장착 해제합니다. (인벤토리 슬롯은 유지)");
 
                     // 장착 해제
                     if (currentWeaponObject != null)
@@ -193,11 +200,10 @@ public class InventoryManager : MonoBehaviour
                     currentWeaponObject = null;
                     currentEquippedItem = null;
 
-                    // 슬롯 비우기
-                    currentEquippedSlot.ClearSlot();
+                    // 슬롯을 비우지 않고, 레퍼런스만 초기화
                     currentEquippedSlot = null;
 
-                    // UI 업데이트
+                    // UI 업데이트 (테두리 제거)
                     UpdateEquipUI();
                 }
             }
