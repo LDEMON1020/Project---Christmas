@@ -171,12 +171,18 @@ public class RangedEnemy : MonoBehaviour, IStunnable
         coin.GetComponent<CoinItem>().coinData = coinData;
     }
 
-    public void ApplyKnockback(Vector2 direction, float force)
+    public void ApplyKnockback(Transform attacker, float force)
     {
         if (rb == null) return;
 
         isKnockback = true;
-        rb.velocity = Vector2.zero; // 기존 이동 초기화
+        rb.velocity = Vector2.zero;
+
+        Vector2 rawDir = transform.position - attacker.position;
+
+        // 수평 넉백만 적용
+        Vector2 direction = new Vector2(rawDir.x, 0).normalized;
+
         rb.AddForce(direction * force, ForceMode2D.Impulse);
 
         Invoke(nameof(EndKnockback), knockbackDuration);

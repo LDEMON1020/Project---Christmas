@@ -84,13 +84,13 @@ public class GloveAttack : MonoBehaviour
 
             // µ¥¹ÌÁö
             hit.collider.GetComponent<EnemyController>()?.TakeDamage(Damage);
-            hit.collider.GetComponent<EnemyController>()?.ApplyKnockback(knockDir, knockbackForce);
+            hit.collider.GetComponent<EnemyController>()?.ApplyKnockback(transform, knockbackForce);
 
             hit.collider.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
-            hit.collider.GetComponent<ReconEnemyController>()?.ApplyKnockback(knockDir, knockbackForce);
+            hit.collider.GetComponent<ReconEnemyController>()?.ApplyKnockback(transform, knockbackForce);
 
             hit.collider.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
-            hit.collider.GetComponent<RangedEnemy>()?.ApplyKnockback(knockDir, knockbackForce);
+            hit.collider.GetComponent<RangedEnemy>()?.ApplyKnockback(transform, knockbackForce);
 
         }
     }

@@ -102,8 +102,10 @@ MonoBehaviour:
   attackRange: 1.5
   attackRate: 0.5
   enemyTag: Enemy
-  knockbackForce: 5
+  knockbackForce: 7
   attackEffectPrefab: {fileID: 1519650067680659283, guid: 6c75f9118302d12449655dd2740f94fd, type: 3}
+  inventoryManager: {fileID: 0}
+  goalObject: {fileID: 0}
 --- !u!95 &8201643785868908319
 Animator:
   serializedVersion: 5
