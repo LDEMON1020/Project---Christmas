@@ -5,13 +5,17 @@ using UnityEngine;
 public class GloveAttack : MonoBehaviour
 {
     [Header("공격 설정")]
-    public int Damage = 15;             // 데미지
-    public float attackRange = 1.5f;    // 공격 범위
-    public float attackRate = 0.5f;     // 공격 쿨타임
+    public int Damage = 15;
+    public float attackRange = 1.5f;
+    public float attackRate = 0.5f;
     public string enemyTag = "Enemy";
 
     [Header("넉백 설정")]
-    public float knockbackForce = 5f;   // 넉백 힘
+    public float knockbackForce = 5f;
+
+    [Header("애니메이션 소모 딜레이")]
+    // 이 값을 공격 애니메이션의 길이(초)로 설정해야 합니다.
+    public float consumeDelay = 0.3f;
 
     private float nextAttackTime = 0f;
     private Animator animator;
@@ -49,11 +53,20 @@ public class GloveAttack : MonoBehaviour
             {
                 if (inventoryManager.isInventoryOpen == false)
                 {
-                    Attack();
+                    // 코루틴으로 공격 시작
+                    StartCoroutine(AttackCoroutine());
                     nextAttackTime = Time.time + attackRate;
                 }
             }
         }
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        Attack();
+        yield return new WaitForSeconds(consumeDelay);
+
+        InventoryManager.Instance.ConsumeEquippedItemOnAttack();
     }
 
     void Attack()

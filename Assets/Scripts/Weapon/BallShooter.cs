@@ -52,6 +52,7 @@ public class BallShooter : MonoBehaviour
                 if (inventoryManager.isInventoryOpen == false)
                 {
                     Shoot();
+                    InventoryManager.Instance.ConsumeEquippedItemOnAttack();
                 }
             }
         }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
@@ -13,9 +12,10 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemSlotPrefab;
 
     [Header("Equip System")]
-    public Transform weaponHolder; //  플레이어의 무기가 생성될 위치 (손)
+    public Transform weaponHolder; // 플레이어의 무기가 생성될 위치 (손)
     private GameObject currentWeaponObject; // 현재 게임 월드에 생성된 무기 오브젝트
-    private Item currentEquippedItem;       // 현재 장착된 아이템 데이터
+    private Item currentEquippedItem; // 현재 장착된 아이템 데이터
+    private InventorySlot currentEquippedSlot;
 
     [Header("Starting Items")]
     public List<Item> startingItems; // 게임 시작 시 지급할 아이템 목록
@@ -36,7 +36,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         CreateInventorySlots();
-        SetStartingItems(); // 시작 아이템 지급
+        SetStartingItems();
         inventoryUI.SetActive(false);
     }
 
@@ -79,16 +79,32 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 아이템 추가 (단순히 빈 슬롯을 찾아 넣음)
-    public bool AddItem(Item item)
+    public bool AddItem(Item item, int count = 1)
     {
+        // 1. 이미 인벤토리에 같은 '공격 시 소모' 아이템이 있는지 확인하고 스택
+        if (item.consumeOnAttack)
+        {
+            foreach (InventorySlot slot in slots)
+            {
+                if (slot.item == item)
+                {
+                    slot.UpdateCount(slot.count + count);
+                    return true;
+                }
+            }
+        }
+
+        // 2. 빈 슬롯에 새로운 아이템으로 추가
         foreach (InventorySlot slot in slots)
         {
             if (slot.item == null) // 빈 슬롯 발견
             {
-                slot.SetItem(item);
+                slot.SetItem(item, count);
                 return true;
             }
         }
+
+        Debug.Log("인벤토리가 가득 찼습니다.");
         return false;
     }
 
@@ -104,18 +120,32 @@ public class InventoryManager : MonoBehaviour
                 {
                     Destroy(currentWeaponObject);
                     currentEquippedItem = null;
+                    currentEquippedSlot = null;
                 }
                 return;
             }
         }
     }
 
-    //  아이템 장착 함수 
+    // 아이템 장착 함수 
     public void EquipItem(Item newItem)
     {
         //이미 같은 걸 끼고 있다면 무시
         if (currentEquippedItem == newItem) return;
+
+        // 장착할 슬롯 찾기 및 저장
+        InventorySlot slotToEquip = null;
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.item == newItem)
+            {
+                slotToEquip = slot;
+                break;
+            }
+        }
+
         currentEquippedItem = newItem;
+        currentEquippedSlot = slotToEquip; // 현재 슬롯 정보 저장
 
         //기존에 들고 있던 무기 오브젝트 파괴
         if (currentWeaponObject != null)
@@ -137,6 +167,41 @@ public class InventoryManager : MonoBehaviour
 
         // 4. UI 업데이트 (장착된 슬롯에만 테두리 표시)
         UpdateEquipUI();
+    }
+
+    // 공격 스크립트에서 호출해야 하는 함수
+    public void ConsumeEquippedItemOnAttack()
+    {
+        // 1. 현재 장착된 아이템이 있고, '공격 시 소모' 유형인지 확인
+        if (currentEquippedItem != null && currentEquippedItem.consumeOnAttack)
+        {
+            if (currentEquippedSlot != null)
+            {
+                // 2. 갯수 감소 처리
+                currentEquippedSlot.UpdateCount(currentEquippedSlot.count - 1);
+
+                // 3. 갯수가 0이 되면 장착 해제 및 슬롯 비우기
+                if (currentEquippedSlot.count <= 0)
+                {
+                    Debug.Log(currentEquippedItem.itemName + " 아이템을 모두 소모했습니다. 장착 해제합니다.");
+
+                    // 장착 해제
+                    if (currentWeaponObject != null)
+                    {
+                        Destroy(currentWeaponObject);
+                    }
+                    currentWeaponObject = null;
+                    currentEquippedItem = null;
+
+                    // 슬롯 비우기
+                    currentEquippedSlot.ClearSlot();
+                    currentEquippedSlot = null;
+
+                    // UI 업데이트
+                    UpdateEquipUI();
+                }
+            }
+        }
     }
 
     // UI 테두리 갱신용 함수
@@ -166,7 +231,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             UpdateEquipUI(); // 인벤 열 때 UI 상태 갱신
-            Time.timeScale = 0.2f; // 인벤토리를 열었을 때 시간 느리게 하기(원하는 값으로 조정가능)
+            Time.timeScale = 0.2f; // 인벤토리를 열었을 때 시간 느리게 하기
         }
         else
         {

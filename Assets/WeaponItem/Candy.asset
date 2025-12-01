@@ -15,4 +15,6 @@ MonoBehaviour:
   itemName: Candy
   itemIcon: {fileID: 21300000, guid: dc337fd40cf36a24baac17a61a6680e3, type: 3}
   weaponPrefab: {fileID: 8537969873211773782, guid: 5c083c2e813257d40b9d679a4c16c8f4, type: 3}
+  isEquippable: 1
+  isConsumable: 1
   weaponType: 0

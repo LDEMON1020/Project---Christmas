@@ -41,6 +41,7 @@ public class PlayerShoot : MonoBehaviour
                 if (inventoryManager.isInventoryOpen == false)
                 {
                     Shoot();
+                    InventoryManager.Instance.ConsumeEquippedItemOnAttack();
                 }
             }
         }

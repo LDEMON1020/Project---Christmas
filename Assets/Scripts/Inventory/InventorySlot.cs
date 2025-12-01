@@ -2,25 +2,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-// Unity 스크립트|참조 0개
-public class InventorySlot : MonoBehaviour, IPointerClickHandler // 클릭 인터페이스 추가
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    public Item item;                   // 이 슬롯에 있는 아이템
+    public Item item;
+    public int count;
 
     [Header("UI Reference")]
-    public Image itemIcon;              // 아이템 아이콘 이미지
-    public GameObject emptySlotImage;   // 빈 슬롯일 때 보여줄 이미지
-    public GameObject selectedFrame; // 장착 중임을 나타내는 테두리
+    public Image itemIcon;
+    public GameObject emptySlotImage;
+    public GameObject selectedFrame;
+    public Text countText;
 
-    public void SetItem(Item newItem)   // 갯수 인자(int count) 삭제
+    public void SetItem(Item newItem, int newCount = 1)
     {
         item = newItem;
+        count = newCount;
+        UpdateSlotUI();
+    }
+
+    public void UpdateCount(int newCount)
+    {
+        count = newCount;
         UpdateSlotUI();
     }
 
     public void ClearSlot()
     {
         item = null;
+        count = 0;
         UpdateSlotUI();
     }
 
@@ -31,11 +40,17 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler // 클릭 인터페�
             itemIcon.sprite = item.itemIcon;
             itemIcon.enabled = true;
             if (emptySlotImage != null) emptySlotImage.SetActive(false);
+
+            if (countText != null)
+            {
+                countText.text = count > 1 ? count.ToString() : "";
+            }
         }
         else
         {
             itemIcon.enabled = false;
             if (emptySlotImage != null) emptySlotImage.SetActive(true);
+            if (countText != null) countText.text = "";
         }
 
         // 아이템이 없거나 장착 상태가 아니면 테두리 끄기
@@ -45,13 +60,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler // 클릭 인터페�
         }
     }
 
-    //  슬롯을 클릭했을 때 실행되는 함수
+    // 슬롯을 클릭했을 때 실행되는 함수
     public void OnPointerClick(PointerEventData eventData)
     {
         if (item != null)
         {
-            //아이템 장착 요청
-            InventoryManager.Instance.EquipItem(item);
+            if (item.isEquippable)
+            {
+                //아이템 장착 요청
+                InventoryManager.Instance.EquipItem(item);
+            }
         }
     }
 }

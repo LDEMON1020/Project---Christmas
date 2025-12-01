@@ -21,6 +21,7 @@ public class Cocoa : MonoBehaviour
         if (Input.GetMouseButtonDown(0))   // 마우스 좌클릭
         {
             TryUse();
+            InventoryManager.Instance.ConsumeEquippedItemOnAttack();
         }
     }
 
