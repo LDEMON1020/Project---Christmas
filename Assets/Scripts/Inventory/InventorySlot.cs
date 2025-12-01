@@ -11,7 +11,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Image itemIcon;
     public GameObject emptySlotImage;
     public GameObject selectedFrame;
-    public Text countText;
+    public Text countText; // 개수 표시 텍스트
 
     public void SetItem(Item newItem, int newCount = 1)
     {
@@ -43,14 +43,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
             if (countText != null)
             {
-                countText.text = count > 1 ? count.ToString() : "";
+                countText.text = count.ToString();
             }
         }
         else
         {
             itemIcon.enabled = false;
             if (emptySlotImage != null) emptySlotImage.SetActive(true);
-            if (countText != null) countText.text = "";
+
+            // 아이템이 없을 때: 개수 텍스트를 반드시 비움
+            if (countText != null)
+            {
+                countText.text = "";
+            }
         }
 
         // 아이템이 없거나 장착 상태가 아니면 테두리 끄기
