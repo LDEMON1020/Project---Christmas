@@ -1,9 +1,14 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // SceneManager ì‚¬ìš©ì„ ìœ„í•´ ì¶”ê°€
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
+
+    [Header("Global Data")]
+    public GlobalInventoryData globalData; // ì¸ìŠ¤í™í„°ì—ì„œ GlobalInventoryData.asset íŒŒì¼ ì—°ê²° í•„ìˆ˜!
+    public List<Item> startingItems; // ì´ˆê¸° ì•„ì´í…œ ì„¤ì •ìš©
 
     [Header("Inventory Setting")]
     public int inventorySize = 15;
@@ -12,13 +17,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemSlotPrefab;
 
     [Header("Equip System")]
-    public Transform weaponHolder; // ÇÃ·¹ÀÌ¾îÀÇ ¹«±â°¡ »ı¼ºµÉ À§Ä¡ (¼Õ)
-    private GameObject currentWeaponObject; // ÇöÀç °ÔÀÓ ¿ùµå¿¡ »ı¼ºµÈ ¹«±â ¿ÀºêÁ§Æ®
-    private Item currentEquippedItem; // ÇöÀç ÀåÂøµÈ ¾ÆÀÌÅÛ µ¥ÀÌÅÍ
-    private InventorySlot currentEquippedSlot;
-
-    [Header("Starting Items")]
-    public List<Item> startingItems; // °ÔÀÓ ½ÃÀÛ ½Ã Áö±ŞÇÒ ¾ÆÀÌÅÛ ¸ñ·Ï
+    public Transform weaponHolder;
+    private GameObject currentWeaponObject;
+    private InventorySlot currentEquippedSlot; // UI ìƒì˜ ìŠ¬ë¡¯ ì°¸ì¡°
 
     [Header("Input")]
     public KeyCode inventoryKey = KeyCode.I;
@@ -29,14 +30,38 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            // DontDestroyOnLoad ì œê±°. ì”¬ì´ ë°”ë€” ë•Œë§ˆë‹¤ ìƒˆë¡œ ìƒì„±ë¨.
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
     {
+        // ì”¬ ë¡œë“œ ì‹œë§ˆë‹¤ UI ìŠ¬ë¡¯ ì¬ìƒì„±
         CreateInventorySlots();
-        SetStartingItems();
+
+        // Global Dataê°€ ë¹„ì–´ìˆìœ¼ë©´ ì´ˆê¸° ì•„ì´í…œìœ¼ë¡œ ì„¸íŒ… (ê²Œì„ ìµœì´ˆ ì‹œì‘ ì‹œ)
+        if (globalData.items.Count == 0 && startingItems.Count > 0)
+        {
+            globalData.Initialize(startingItems);
+        }
+
+        // Global Dataë¥¼ ë°”íƒ•ìœ¼ë¡œ UI êµ¬ì„±
+        LoadInventoryData();
+
+        // ì €ì¥ëœ ì¥ì°© ì•„ì´í…œì´ ìˆë‹¤ë©´ ë‹¤ì‹œ ì¥ì°©
+        if (globalData.currentEquippedItem != null)
+        {
+            // EquipItem(ì•„ì´í…œ ë°ì´í„°, UI ë‹«ê¸° ì—¬ë¶€)
+            EquipItem(globalData.currentEquippedItem, false);
+        }
+
         inventoryUI.SetActive(false);
     }
 
@@ -44,7 +69,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(inventoryKey))
         {
-            if (goalObject.isGameClear == false)
+            if (goalObject != null && goalObject.isGameClear == false)
             {
                 if (Player != null)
                 {
@@ -55,9 +80,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ½½·Ô »ı¼º ÇÔ¼ö
+    // ìŠ¬ë¡¯ ìƒì„± í•¨ìˆ˜
     void CreateInventorySlots()
     {
+        // ì”¬ì´ ë¡œë“œë  ë•Œë§ˆë‹¤ ìŠ¬ë¡¯ì„ ìƒˆë¡œ ìƒì„±í•˜ë¯€ë¡œ ê¸°ì¡´ ìŠ¬ë¡¯ì´ ìˆë‹¤ë©´ ì •ë¦¬
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot != null) Destroy(slot.gameObject);
+        }
+        slots.Clear();
+
         for (int i = 0; i < inventorySize; i++)
         {
             GameObject slotObject = Instantiate(itemSlotPrefab, itemSlotParent);
@@ -66,163 +98,159 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // ½ÃÀÛ ¾ÆÀÌÅÛµéÀ» ÀÎº¥Åä¸®¿¡ ³Ö´Â ÇÔ¼ö
-    void SetStartingItems()
+    // Global Dataì—ì„œ ë°ì´í„°ë¥¼ ì½ì–´ì™€ UIì— í‘œì‹œ
+    void LoadInventoryData()
     {
-        if (startingItems != null)
-        {
-            foreach (Item item in startingItems)
-            {
-                AddItem(item);
-            }
-        }
-    }
-
-    // ¾ÆÀÌÅÛ Ãß°¡ (´Ü¼øÈ÷ ºó ½½·ÔÀ» Ã£¾Æ ³ÖÀ½)
-    public bool AddItem(Item item, int count = 1)
-    {
-        // 1. ÀÌ¹Ì ÀÎº¥Åä¸®¿¡ °°Àº '°ø°İ ½Ã ¼Ò¸ğ' ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ°í ½ºÅÃ
-        if (item.consumeOnAttack)
-        {
-            foreach (InventorySlot slot in slots)
-            {
-                if (slot.item == item)
-                {
-                    slot.UpdateCount(slot.count + count);
-                    return true;
-                }
-            }
-        }
-
-        // 2. ºó ½½·Ô¿¡ »õ·Î¿î ¾ÆÀÌÅÛÀ¸·Î Ãß°¡
+        // 1. ëª¨ë“  ìŠ¬ë¡¯ì„ ë¹„ì›€ (ë°ì´í„°ëŠ” globalDataì— ë‚¨ì•„ìˆìŒ)
         foreach (InventorySlot slot in slots)
         {
-            if (slot.item == null) // ºó ½½·Ô ¹ß°ß
-            {
-                slot.SetItem(item, count);
-                return true;
-            }
+            slot.ClearSlot();
         }
 
-        Debug.Log("ÀÎº¥Åä¸®°¡ °¡µæ Ã¡½À´Ï´Ù.");
+        // 2. Global Dataì— ì €ì¥ëœ ì•„ì´í…œë“¤ì„ UI ìŠ¬ë¡¯ì— ë„£ì–´ì¤Œ
+        for (int i = 0; i < globalData.items.Count && i < inventorySize; i++)
+        {
+            InventoryItemData data = globalData.items[i];
+            slots[i].SetItem(data.item, data.count);
+        }
+
+        // í˜„ì¬ ì¥ì°©ëœ ìŠ¬ë¡¯ì„ ë‹¤ì‹œ ì—°ê²°
+        currentEquippedSlot = slots.Find(slot => slot.item == globalData.currentEquippedItem);
+    }
+
+    // ì•„ì´í…œ ì¶”ê°€ (ë°ì´í„° ì—…ë°ì´íŠ¸ í›„ UI ê°±ì‹ )
+    public bool AddItem(Item item, int count = 1)
+    {
+        // 1. Global Dataì— ì•„ì´í…œ ì¶”ê°€
+        if (globalData.AddItem(item, count))
+        {
+            // 2. UI ê°±ì‹  (Global Dataë¥¼ ë‹¤ì‹œ ì½ì–´ì˜´)
+            LoadInventoryData();
+            return true;
+        }
+
+        Debug.Log("ì¸ë²¤í† ë¦¬ê°€ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤.");
         return false;
     }
 
+    // ì•„ì´í…œ ì œê±° (ë°ì´í„° ì—…ë°ì´íŠ¸ í›„ UI ê°±ì‹  ë° ì¥ì°© í•´ì œ)
     public void RemoveItem(Item item)
     {
-        foreach (InventorySlot slot in slots)
+        // ì¥ì°© í•´ì œ ì²˜ë¦¬
+        if (globalData.currentEquippedItem == item)
         {
-            if (slot.item == item)
+            if (currentWeaponObject != null)
             {
-                slot.ClearSlot();
-                // ¸¸¾à »èÁ¦µÈ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÌ´ø °Å¶ó¸é ¹«±âµµ ¾ø¾Ú
-                if (currentEquippedItem == item)
-                {
-                    Destroy(currentWeaponObject);
-                    currentEquippedItem = null;
-                    currentEquippedSlot = null;
-                }
-                return;
+                Destroy(currentWeaponObject);
             }
+            globalData.currentEquippedItem = null;
+            currentEquippedSlot = null;
         }
+
+        // Global Dataì—ì„œ ì œê±°
+        globalData.RemoveItemData(item);
+
+        // UI ê°±ì‹ 
+        LoadInventoryData();
+        UpdateEquipUI();
     }
 
-    // ¾ÆÀÌÅÛ ÀåÂø ÇÔ¼ö 
+    // ì•„ì´í…œ ì¥ì°© í•¨ìˆ˜
     public void EquipItem(Item newItem)
     {
-        //ÀÌ¹Ì °°Àº °É ³¢°í ÀÖ´Ù¸é ¹«½Ã
-        if (currentEquippedItem == newItem) return;
+        EquipItem(newItem, true); // ê¸°ë³¸ì ìœ¼ë¡œ ì¸ë²¤í† ë¦¬ ë‹«ê¸°
+    }
 
-        // ÀåÂøÇÒ ½½·Ô Ã£±â ¹× ÀúÀå
-        InventorySlot slotToEquip = null;
-        foreach (InventorySlot slot in slots)
-        {
-            if (slot.item == newItem)
-            {
-                slotToEquip = slot;
-                break;
-            }
-        }
+    // ì˜¤ë²„ë¡œë“œ: ì”¬ ë¡œë“œ ì‹œ EquipItem í˜¸ì¶œìš©
+    public void EquipItem(Item newItem, bool closeInventory)
+    {
+        //ì´ë¯¸ ê°™ì€ ê±¸ ë¼ê³  ìˆë‹¤ë©´ ë¬´ì‹œ
+        if (globalData.currentEquippedItem == newItem && currentWeaponObject != null) return;
 
-        // °³¼ö°¡ 0°³ÀÎ ¾ÆÀÌÅÛÀº ÀåÂø ºÒ°¡
-        if (slotToEquip != null && slotToEquip.count <= 0)
+        // ê°œìˆ˜ê°€ 0ê°œì¸ ì•„ì´í…œì€ ì¥ì°© ë¶ˆê°€
+        if (globalData.GetItemCount(newItem) <= 0)
         {
-            Debug.Log("¾ÆÀÌÅÛ " + newItem.itemName + "ÀÇ °³¼ö°¡ 0°³ÀÌ¹Ç·Î ÀåÂøÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("ì•„ì´í…œ " + newItem.itemName + "ì˜ ê°œìˆ˜ê°€ 0ê°œì´ë¯€ë¡œ ì¥ì°©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
-        currentEquippedItem = newItem;
-        currentEquippedSlot = slotToEquip; // ÇöÀç ½½·Ô Á¤º¸ ÀúÀå
+        // Global Dataì— ì¥ì°© ì •ë³´ ì €ì¥
+        globalData.currentEquippedItem = newItem;
+        currentEquippedSlot = slots.Find(slot => slot.item == newItem); // UI ìŠ¬ë¡¯ ì°¸ì¡° ì—…ë°ì´íŠ¸
 
-        //±âÁ¸¿¡ µé°í ÀÖ´ø ¹«±â ¿ÀºêÁ§Æ® ÆÄ±«
+        //ê¸°ì¡´ì— ë“¤ê³  ìˆë˜ ë¬´ê¸° ì˜¤ë¸Œì íŠ¸ íŒŒê´´
         if (currentWeaponObject != null)
         {
             Destroy(currentWeaponObject);
         }
 
-        //»õ·Î¿î ¹«±â ¼ÒÈ¯ (ÇÃ·¹ÀÌ¾î ¼Õ À§Ä¡¿¡)
+        //ìƒˆë¡œìš´ ë¬´ê¸° ì†Œí™˜ (í”Œë ˆì´ì–´ ì† ìœ„ì¹˜ì—)
         if (newItem.weaponPrefab != null && weaponHolder != null)
         {
             currentWeaponObject = Instantiate(newItem.weaponPrefab, weaponHolder);
-            // À§Ä¡ 0À¸·Î ÃÊ±âÈ­ (¼Õ À§Ä¡¿¡ µü ºÙ°Ô)
             currentWeaponObject.transform.localPosition = Vector3.zero;
 
-            inventoryUI.SetActive(false);
-            Time.timeScale = 1f; // ÀÎº¥Åä¸®¸¦ ´İ°í ½Ã°£À» Á¤»óÀ¸·Î µ¹¸®±â
-            isInventoryOpen = false; // ÀÎº¥Åä¸® »óÅÂ µ¿±âÈ­
+            if (closeInventory)
+            {
+                inventoryUI.SetActive(false);
+                Time.timeScale = 1f;
+                isInventoryOpen = false;
+            }
         }
 
-        // 4. UI ¾÷µ¥ÀÌÆ® (ÀåÂøµÈ ½½·Ô¿¡¸¸ Å×µÎ¸® Ç¥½Ã)
+        // UI ì—…ë°ì´íŠ¸ (ì¥ì°©ëœ ìŠ¬ë¡¯ì—ë§Œ í…Œë‘ë¦¬ í‘œì‹œ)
         UpdateEquipUI();
     }
 
-    // °ø°İ ½ºÅ©¸³Æ®¿¡¼­ È£ÃâÇØ¾ß ÇÏ´Â ÇÔ¼ö
+    // ê³µê²© ìŠ¤í¬ë¦½íŠ¸ì—ì„œ í˜¸ì¶œí•´ì•¼ í•˜ëŠ” í•¨ìˆ˜
     public void ConsumeEquippedItemOnAttack()
     {
-        // 1. ÇöÀç ÀåÂøµÈ ¾ÆÀÌÅÛÀÌ ÀÖ°í, '°ø°İ ½Ã ¼Ò¸ğ' À¯ÇüÀÎÁö È®ÀÎ
-        if (currentEquippedItem != null && currentEquippedItem.consumeOnAttack)
+        Item equippedItem = globalData.currentEquippedItem;
+
+        if (equippedItem != null && equippedItem.consumeOnAttack)
         {
-            if (currentEquippedSlot != null)
+            int currentCount = globalData.GetItemCount(equippedItem);
+
+            if (currentCount > 0)
             {
-                // 2. °¹¼ö °¨¼Ò Ã³¸®
-                currentEquippedSlot.UpdateCount(currentEquippedSlot.count - 1);
+                // ê°¯ìˆ˜ ê°ì†Œ ì²˜ë¦¬ (Global Data ì—…ë°ì´íŠ¸)
+                globalData.UpdateItemCount(equippedItem, currentCount - 1);
 
-                // 3. °¹¼ö°¡ 0ÀÌ µÇ¸é ÀåÂø ÇØÁ¦¸¸ ÇÏ°í ½½·ÔÀº À¯Áö
-                if (currentEquippedSlot.count <= 0)
+                // UI ì—…ë°ì´íŠ¸
+                if (currentEquippedSlot != null)
                 {
-                    Debug.Log(currentEquippedItem.itemName + " ¾ÆÀÌÅÛÀ» ¸ğµÎ ¼Ò¸ğÇß½À´Ï´Ù. ÀåÂø ÇØÁ¦ÇÕ´Ï´Ù. (ÀÎº¥Åä¸® ½½·ÔÀº À¯Áö)");
+                    currentEquippedSlot.UpdateCount(currentCount - 1);
+                }
 
-                    // ÀåÂø ÇØÁ¦
+                // ê°¯ìˆ˜ê°€ 0ì´ ë˜ë©´ ì¥ì°© í•´ì œ
+                if (currentCount - 1 <= 0)
+                {
                     if (currentWeaponObject != null)
                     {
                         Destroy(currentWeaponObject);
                     }
                     currentWeaponObject = null;
-                    currentEquippedItem = null;
-
-                    // ½½·ÔÀ» ºñ¿ìÁö ¾Ê°í, ·¹ÆÛ·±½º¸¸ ÃÊ±âÈ­
+                    globalData.currentEquippedItem = null;
                     currentEquippedSlot = null;
 
-                    // UI ¾÷µ¥ÀÌÆ® (Å×µÎ¸® Á¦°Å)
+                    // UI ì—…ë°ì´íŠ¸ (í…Œë‘ë¦¬ ì œê±°)
                     UpdateEquipUI();
                 }
             }
         }
     }
 
-    // UI Å×µÎ¸® °»½Å¿ë ÇÔ¼ö
+    // UI í…Œë‘ë¦¬ ê°±ì‹ ìš© í•¨ìˆ˜
     void UpdateEquipUI()
     {
         foreach (InventorySlot slot in slots)
         {
-            if (slot.item == currentEquippedItem)
+            if (slot.item == globalData.currentEquippedItem) // Global Data ì°¸ì¡°
             {
-                // ÀåÂøµÈ ¾ÆÀÌÅÛ ½½·ÔÀÌ¸é Å×µÎ¸® ÄÑ±â
                 if (slot.selectedFrame != null) slot.selectedFrame.SetActive(true);
             }
             else
             {
-                // ¾Æ´Ï¸é Å×µÎ¸® ²ô±â
                 if (slot.selectedFrame != null) slot.selectedFrame.SetActive(false);
             }
         }
@@ -236,14 +264,14 @@ public class InventoryManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            UpdateEquipUI(); // ÀÎº¥ ¿­ ¶§ UI »óÅÂ °»½Å
-            Time.timeScale = 0.2f; // ÀÎº¥Åä¸®¸¦ ¿­¾úÀ» ¶§ ½Ã°£ ´À¸®°Ô ÇÏ±â
+            UpdateEquipUI();
+            Time.timeScale = 0.2f;
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Time.timeScale = 1f; // ÀÎº¥Åä¸®¸¦ ´İ¾ÒÀ» ¶§ ½Ã°£À» ´Ù½Ã µÇµ¹¸®±â
+            Time.timeScale = 1f;
         }
     }
 }
