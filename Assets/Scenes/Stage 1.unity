@@ -1952,7 +1952,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1414333421}
   m_HandleRect: {fileID: 0}
@@ -39814,17 +39814,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf8920da03996842b5d32e6c375850d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySize: 15
-  inventoryUI: {fileID: 1555624590}
-  itemSlotParent: {fileID: 1393139653}
-  itemSlotPrefab: {fileID: 927583190668064454, guid: 69e366148e73ea0478cb4834f2498f7b, type: 3}
-  weaponHolder: {fileID: 726902240}
+  globalData: {fileID: 11400000, guid: 9e65d40d30ca3614a85f4294f4d04d77, type: 2}
   startingItems:
   - {fileID: 11400000, guid: 048f45123bd45b74cb18815b40dcaee2, type: 2}
   - {fileID: 11400000, guid: f646d0d7c3714484da98b024d64075ca, type: 2}
   - {fileID: 11400000, guid: 8da768333aa34a1408c34b44615fd156, type: 2}
   - {fileID: 11400000, guid: a9a6595c20d96144aa2b1c559649024b, type: 2}
   - {fileID: 11400000, guid: f35ddd0fd4c9c484a86508e8400fce6d, type: 2}
+  inventorySize: 15
+  inventoryUI: {fileID: 1555624590}
+  itemSlotParent: {fileID: 1393139653}
+  itemSlotPrefab: {fileID: 927583190668064454, guid: 69e366148e73ea0478cb4834f2498f7b, type: 3}
+  weaponHolder: {fileID: 726902240}
   inventoryKey: 101
   slots: []
   isInventoryOpen: 0
