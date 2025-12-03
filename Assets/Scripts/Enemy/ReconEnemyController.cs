@@ -6,6 +6,10 @@ public class ReconEnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight = true;  // 현재 바라보는 방향
 
+    public int damage = 3;
+
+    public string playerTag = "Player";
+
     [Header("체력 시스템")]
     public int maxHP = 20;
     public int currentHP;
@@ -49,10 +53,18 @@ public class ReconEnemyController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // "Wall" 태그를 가진 오브젝트에 부딪히면 방향 반전
         if (collision.gameObject.CompareTag("Boundary"))
         {
             Flip();
+        }
+
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerController>().TakeDamage(damage);
         }
     }
 
