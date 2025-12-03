@@ -17,19 +17,21 @@ public class AchievementSystem : MonoBehaviour
         public AchievementType type;
         public string description;
         public bool isUnlocked;
-        public bool showAlert;
+        public GameObject uiPrefab;
+        public Transform popupRoot;
 
         public void Unlock()
         {
-            if (!isUnlocked)
-            {
-                isUnlocked = true;
-                Debug.Log($"업적 달성: {type}");
+            if (isUnlocked) return;
 
-                if (showAlert)
-                {
-                    ShowAchievementAlert();
-                }
+            isUnlocked = true;
+            Debug.Log($"업적 해금: {type}");
+
+            // 업적 UI 활성화
+            if (uiPrefab != null)
+            {
+                GameObject ui = Instantiate(uiPrefab, popupRoot);
+                ui.transform.localScale = Vector3.one;
             }
         }
 
