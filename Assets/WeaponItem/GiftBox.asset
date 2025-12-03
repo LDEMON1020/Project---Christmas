@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: GiftBox
   itemIcon: {fileID: 21300000, guid: 8e2362ef1cf2df44c94d47ba2b99de4b, type: 3}
+  Price: 400
   weaponPrefab: {fileID: 5899181984791874434, guid: a244dbd293f6c144fa7569eeb4d011c1, type: 3}
   isEquippable: 1
   consumeOnAttack: 1

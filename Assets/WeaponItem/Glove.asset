@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Glove
   itemIcon: {fileID: 21300000, guid: 41540514ea967bf4c865c162220c9a52, type: 3}
+  Price: 100
   weaponPrefab: {fileID: 2144272685544715210, guid: 7e2652c4e1512924ea1a09836be021e8, type: 3}
   isEquippable: 1
   consumeOnAttack: 1

@@ -4,10 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemShopManager : MonoBehaviour
-{
-    
+{  
     public CoinManager coinManager;
-    public int itemPrice = 100;
 
     private void Awake()
     {
@@ -15,10 +13,10 @@ public class ItemShopManager : MonoBehaviour
 }
     public void BuyItem(Item itemToBuy)
     {
-       if(itemPrice <= coinManager.coin)
+       if(itemToBuy.Price <= coinManager.coin)
         {
             InventoryManager.Instance.AddItem(itemToBuy, 1);
-            coinManager.coin -= itemPrice;
+            coinManager.coin -= itemToBuy.Price;
         }
        else
         {
