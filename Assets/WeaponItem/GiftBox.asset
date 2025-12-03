@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7769ce59f7d51734abc0d4ddd18f4a6e, type: 3}
+  m_Name: GiftBox
+  m_EditorClassIdentifier: 
+  itemName: GiftBox
+  itemIcon: {fileID: 21300000, guid: 8e2362ef1cf2df44c94d47ba2b99de4b, type: 3}
+  weaponPrefab: {fileID: 5899181984791874434, guid: a244dbd293f6c144fa7569eeb4d011c1, type: 3}
+  isEquippable: 1
+  consumeOnAttack: 1
+  weaponType: 4
