@@ -6,9 +6,12 @@ public class Giftbox : MonoBehaviour
     public int minShards = 2;
     public int maxShards = 3;
 
+    [Header("Æø¹ß ¼³Á¤")]
+    public float delayBeforeExplosion = 3.0f;
+
     void Start()
     {
-        Explode();
+        Invoke("Explode", delayBeforeExplosion);
     }
 
     public void Explode()
@@ -29,6 +32,7 @@ public class Giftbox : MonoBehaviour
             rb.AddForce(direction.normalized * Random.Range(6f, 10f), ForceMode2D.Impulse);
         }
 
+        // Æø¹ß ÈÄ ÀÚ±â ÀÚ½Å ÆÄ±«
         Destroy(gameObject);
     }
 }
