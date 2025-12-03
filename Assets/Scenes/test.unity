@@ -281,15 +281,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf8920da03996842b5d32e6c375850d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalData: {fileID: 0}
+  startingItems:
+  - {fileID: 11400000, guid: 048f45123bd45b74cb18815b40dcaee2, type: 2}
+  - {fileID: 11400000, guid: f646d0d7c3714484da98b024d64075ca, type: 2}
+  - {fileID: 11400000, guid: 8da768333aa34a1408c34b44615fd156, type: 2}
   inventorySize: 15
   inventoryUI: {fileID: 1592172507}
   itemSlotParent: {fileID: 1427056495}
   itemSlotPrefab: {fileID: 927583190668064454, guid: 69e366148e73ea0478cb4834f2498f7b, type: 3}
   weaponHolder: {fileID: 1032153412}
-  startingItems:
-  - {fileID: 11400000, guid: 048f45123bd45b74cb18815b40dcaee2, type: 2}
-  - {fileID: 11400000, guid: f646d0d7c3714484da98b024d64075ca, type: 2}
-  - {fileID: 11400000, guid: 8da768333aa34a1408c34b44615fd156, type: 2}
   inventoryKey: 101
   slots: []
   isInventoryOpen: 0
@@ -1785,9 +1786,9 @@ MonoBehaviour:
   maxHP: 20
   hpSlider: {fileID: 1465919468}
   stunCirclePrefab: {fileID: 755509491669034187, guid: 35e4ea2cc8af28a4da07562e82c4ad6c, type: 3}
-  stunCircleDuration: 1
   candySr: {fileID: 0}
   sr: {fileID: 2123509422}
+  deadSprite: {fileID: 0}
   groundCheck: {fileID: 560118450}
   checkRadius: 0.2
   groundLayer:
