@@ -61,6 +61,7 @@ public class BallAttack : MonoBehaviour
                     enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
                     enemy.GetComponent<RangedEnemy>()?.TakeDamage(damage);
                     enemy.GetComponent<ReconEnemyController>()?.TakeDamage(damage);
+                    enemy.GetComponent<GrenadierEnemy>()?.TakeDamage(damage);
                 }
             }
         }

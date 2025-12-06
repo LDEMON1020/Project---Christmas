@@ -105,6 +105,9 @@ public class GloveAttack : MonoBehaviour
             hit.collider.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
             hit.collider.GetComponent<RangedEnemy>()?.ApplyKnockback(transform, knockbackForce);
 
+            hit.collider.GetComponent<GrenadierEnemy>()?.TakeDamage(Damage);
+            hit.collider.GetComponent<GrenadierEnemy>()?.ApplyKnockback(transform, knockbackForce);
+
         }
     }
 }

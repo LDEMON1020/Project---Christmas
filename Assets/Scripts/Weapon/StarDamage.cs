@@ -25,6 +25,11 @@ public class StarDamage : MonoBehaviour
             {
                 ranged.TakeDamage(damage);
             }
+            GrenadierEnemy Greandier = collision.GetComponent<GrenadierEnemy>();
+            if (Greandier != null)
+            {
+                Greandier.TakeDamage(damage);
+            }
         }
     }
 

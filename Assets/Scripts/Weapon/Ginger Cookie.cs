@@ -82,6 +82,7 @@ public class GingerCookie : MonoBehaviour
               other.GetComponent<EnemyController>()?.TakeDamage(Damage);
                other.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
                other.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+            other.GetComponent<GrenadierEnemy>()?.TakeDamage(Damage);
             Destroy(gameObject);
         }
     }

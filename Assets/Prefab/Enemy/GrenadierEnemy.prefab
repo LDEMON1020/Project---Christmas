@@ -57,7 +57,7 @@ MonoBehaviour:
   grenadePrefab: {fileID: 6772296011142094837, guid: 74f87233b83c8864684ae7b1e8407024, type: 3}
   firePoint: {fileID: 925994185723857706}
   throwAngle: 45
-  maxHP: 5
+  maxHP: 10
   currentHP: 0
   coinData: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
 --- !u!50 &7644497224216148863
