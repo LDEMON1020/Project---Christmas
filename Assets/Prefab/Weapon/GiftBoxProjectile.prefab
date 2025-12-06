@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shardPrefab: {fileID: 4184121316204263676, guid: 1e8220485dde82b44a7e0c2eb1f1e01f, type: 3}
-  minShards: 2
-  maxShards: 3
+  minShards: 4
+  maxShards: 6
   delayBeforeExplosion: 3
 --- !u!50 &3280355390242314433
 Rigidbody2D:
