@@ -9,6 +9,10 @@ public class GiftboxShooter : MonoBehaviour
 
     private Transform playerTransform;
 
+    [Header("발사 쿨타임 설정")]
+    public float attackCooldown = 0.5f;     // 공격 사이의 최소 시간
+    private float lastShootTime = 0f;       // 마지막으로 발사한 시간을 기록
+
     [Header("기타 참조")]
     public InventoryManager inventoryManager;
     public GoalObject goalObject;
@@ -22,6 +26,9 @@ public class GiftboxShooter : MonoBehaviour
         {
             Debug.LogError("Inventory Manager 컴포넌트(타입: " + typeof(InventoryManager).Name + ")를 씬에서 찾을 수 없습니다.");
         }
+
+        // 게임 시작 시 바로 발사 가능하도록 초기화
+        lastShootTime = -attackCooldown;
     }
 
     private void Start()
@@ -43,16 +50,25 @@ public class GiftboxShooter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (goalObject.isGameClear == false)
+            if (Time.time >= lastShootTime + attackCooldown)
             {
-                if (inventoryManager.isInventoryOpen == false)
+                if (goalObject != null && goalObject.isGameClear == false)
                 {
-                    Shoot();
-                    InventoryManager.Instance.ConsumeEquippedItemOnAttack();
+                    if (inventoryManager != null && inventoryManager.isInventoryOpen == false)
+                    {
+                        Shoot();
+                        lastShootTime = Time.time;
+
+                        if (InventoryManager.Instance != null)
+                        {
+                            InventoryManager.Instance.ConsumeEquippedItemOnAttack();
+                        }
+                    }
                 }
             }
         }
     }
+
     void Shoot()
     {
         bool isFacingRight;
