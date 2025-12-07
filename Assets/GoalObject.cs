@@ -5,6 +5,7 @@ public class GoalObject : MonoBehaviour
     public bool isGameClear = false;
     public GameObject GameClearPanel;
     public CoinManager coinManager;
+    public int RewardCoins = 0;
 
 
     private void Awake()
@@ -25,7 +26,7 @@ public class GoalObject : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
-            coinManager.coin += 500; // 보너스 코인 추가
+            coinManager.coin += RewardCoins; // 보너스 코인 추가
         }
     }
 }

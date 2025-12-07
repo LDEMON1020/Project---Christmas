@@ -40736,6 +40736,7 @@ MonoBehaviour:
   isGameClear: 0
   GameClearPanel: {fileID: 1823981982}
   coinManager: {fileID: 0}
+  RewardCoins: 500
 --- !u!61 &1526165063
 BoxCollider2D:
   m_ObjectHideFlags: 0
