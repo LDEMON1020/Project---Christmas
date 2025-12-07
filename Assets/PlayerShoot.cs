@@ -75,9 +75,5 @@ public class PlayerShoot : MonoBehaviour
         {
             cookie.SetDirection(direction);
         }
-        else
-        {
-            Debug.LogWarning("발사된 Prefab에 GingerCookie 스크립트가 없습니다.");
-        }
     }
 }
