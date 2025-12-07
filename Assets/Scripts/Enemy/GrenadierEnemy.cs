@@ -167,8 +167,12 @@ public class GrenadierEnemy : MonoBehaviour
 
     void Die()
     {
+        animator.SetTrigger("Die");
         if (coinData != null) DropCoin();
-        Destroy(gameObject);
+        GetComponent<Collider2D>().enabled = false;
+        rb.velocity = Vector2.zero;
+        isKnockback = true;
+        Destroy(gameObject, 1.5f);
     }
 
     void DropCoin()

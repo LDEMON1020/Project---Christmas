@@ -160,8 +160,12 @@ public class RangedEnemy : MonoBehaviour, IStunnable
 
     void Die()
     {
-        DropCoin();
-        Destroy(gameObject);
+        animator.SetTrigger("Die");
+        if (coinData != null) DropCoin();
+        GetComponent<Collider2D>().enabled = false;
+        rb.velocity = Vector2.zero;
+        isKnockback = true;
+        Destroy(gameObject, 1.5f);
     }
 
     void DropCoin()

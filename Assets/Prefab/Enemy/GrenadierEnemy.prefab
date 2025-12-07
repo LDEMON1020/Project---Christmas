@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  traceRange: 8
-  attackRange: 6
+  traceRange: 13
+  attackRange: 8
   attackCooldown: 2.5
   grenadePrefab: {fileID: 6772296011142094837, guid: 74f87233b83c8864684ae7b1e8407024, type: 3}
   firePoint: {fileID: 925994185723857706}
@@ -120,7 +120,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.06, y: 0}
-  m_Size: {x: 1.67, y: 3.07}
+  m_Size: {x: 2.05, y: 3.64}
   m_Direction: 0
 --- !u!212 &7130808617141969034
 SpriteRenderer:
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 35d059fb2dc87e3459d333b01bf5385b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27ed55f83ee727a4f8546387443d8cc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,7 +184,7 @@ Animator:
   m_GameObject: {fileID: 686147425157659815}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c50b1eecc72e6574db69c338f3667470, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4ce5a4c4da2d34b4d8ee1b8c502c50ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -221,7 +221,7 @@ Transform:
   m_GameObject: {fileID: 873943497419539158}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.869, y: -0.445, z: 0}
+  m_LocalPosition: {x: 1.21, y: -0.363, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
