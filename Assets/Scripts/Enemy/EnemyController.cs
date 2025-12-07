@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
     private float stunEndTime = 0f;
 
     private Animator animator;
-
+    private bool isDead = false;
     void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -99,6 +99,8 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
 
     void Die()
     {
+        if (isDead) return;  
+        isDead = true;
         animator.SetTrigger("Die");
         if (coinData != null) DropCoin();
         rb.velocity = Vector2.zero;

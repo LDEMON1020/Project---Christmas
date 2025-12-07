@@ -20,6 +20,7 @@ public class ReconEnemyController : MonoBehaviour
     private float knockbackDuration = 0.3f;  // 넉백 유지 시간
 
     private Animator animator;
+    private bool isDead = false;
 
     void Start()
     {
@@ -62,6 +63,8 @@ public class ReconEnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead) return;
+
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerController>().TakeDamage(damage);
@@ -80,6 +83,8 @@ public class ReconEnemyController : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
         animator.SetTrigger("Die");
         if (coinData != null) DropCoin();
         rb.velocity = Vector2.zero;

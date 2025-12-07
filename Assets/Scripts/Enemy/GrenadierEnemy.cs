@@ -39,6 +39,7 @@ public class GrenadierEnemy : MonoBehaviour
     public bool IsStunned => isStunned;
 
     private Animator animator;
+    private bool isDead = false;
 
     void Start()
     {
@@ -167,6 +168,8 @@ public class GrenadierEnemy : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
         animator.SetTrigger("Die");
         if (coinData != null) DropCoin();
         rb.velocity = Vector2.zero;

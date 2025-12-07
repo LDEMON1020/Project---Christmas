@@ -37,6 +37,7 @@ public class RangedEnemy : MonoBehaviour, IStunnable
     public bool IsStunned => isStunned; // 외부(공격 스크립트 등)에서 스턴 여부 확인용
 
     private Animator animator;
+    private bool isDead = false;
 
     void Start()
     {
@@ -160,6 +161,8 @@ public class RangedEnemy : MonoBehaviour, IStunnable
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
         animator.SetTrigger("Die");
         if (coinData != null) DropCoin();
         rb.velocity = Vector2.zero;
