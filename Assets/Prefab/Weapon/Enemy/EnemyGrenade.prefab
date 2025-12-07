@@ -134,7 +134,7 @@ MonoBehaviour:
   power: 10
   angle: 45
   lifeTime: 3
-  damage: 1
+  damage: 5
   targetTag: Player
   explosionPrefab: {fileID: 8888844358310461360, guid: 592052cb8192c6b449539eb4c836c181, type: 3}
   targetLayer:
