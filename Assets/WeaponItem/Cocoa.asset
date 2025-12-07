@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Cocoa
   itemIcon: {fileID: 21300000, guid: 013224d5787823f4db08194f6405279a, type: 3}
+  Price: 150
   weaponPrefab: {fileID: 5386052418848641829, guid: bf8ed9f63ee77074489b1d89f24767b7, type: 3}
   isEquippable: 1
   consumeOnAttack: 1

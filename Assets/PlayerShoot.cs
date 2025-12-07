@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public GameObject Prefab; 
-    public Transform firePoint;        
+    public GameObject Prefab;
+    public Transform firePoint;
     public float fireForce = 20f;
 
+    [Header("발사 쿨타임 설정")]
+    public float attackCooldown = 0.5f; 
+    private float lastShootTime = 0f;    
+
+    [Header("기타 참조")]
     public InventoryManager inventoryManager;
     public GoalObject goalObject;
 
@@ -20,6 +25,7 @@ public class PlayerShoot : MonoBehaviour
         {
             Debug.LogError("Inventory Manager 컴포넌트(타입: " + typeof(InventoryManager).Name + ")를 씬에서 찾을 수 없습니다.");
         }
+        lastShootTime = -attackCooldown;
     }
 
     void Start()
@@ -34,14 +40,22 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
-            if (goalObject.isGameClear == false)
+            if (Time.time >= lastShootTime + attackCooldown)
             {
-                if (inventoryManager.isInventoryOpen == false)
+                if (goalObject != null && goalObject.isGameClear == false)
                 {
-                    Shoot();
-                    InventoryManager.Instance.ConsumeEquippedItemOnAttack();
+                    if (inventoryManager != null && inventoryManager.isInventoryOpen == false)
+                    {
+                        Shoot();
+                        lastShootTime = Time.time;
+
+                        if (InventoryManager.Instance != null)
+                        {
+                            InventoryManager.Instance.ConsumeEquippedItemOnAttack();
+                        }
+                    }
                 }
             }
         }
@@ -49,11 +63,21 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
+        if (firePoint == null) return; 
 
         GameObject bullet = Instantiate(Prefab, firePoint.position, firePoint.rotation);
 
         Vector2 direction = firePoint.right;
 
-        bullet.GetComponent<GingerCookie>().SetDirection(direction);
+        GingerCookie cookie = bullet.GetComponent<GingerCookie>();
+
+        if (cookie != null)
+        {
+            cookie.SetDirection(direction);
+        }
+        else
+        {
+            Debug.LogWarning("발사된 Prefab에 GingerCookie 스크립트가 없습니다.");
+        }
     }
 }

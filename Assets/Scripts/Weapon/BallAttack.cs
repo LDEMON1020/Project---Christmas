@@ -4,12 +4,15 @@ using UnityEngine;
 public class BallAttack : MonoBehaviour
 {
     [Header("발사체 설정")]
-    public float power = 10f;              // 발사 힘
-    public float angle = 45f;              // 발사 각도
-    public float lifeTime = 3f;            // 폭발까지 시간
+    public float power = 10f;
+    public float angle = 45f;
+    public float lifeTime = 3f;
     public int damage = 20;
     public string enemyTag = "Enemy";
-    public GameObject explosionPrefab;     // 폭발 범위 프리팹
+    public GameObject explosionPrefab;
+
+    // 레이어 마스크 추가 (적만 정확히 골라내기 위해)
+    public LayerMask enemyLayer;
 
     private Rigidbody2D rb;
 
@@ -33,31 +36,39 @@ public class BallAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(lifeTime);
 
-        // 폭발 프리팹 생성
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        // 폭발 프리팹의 Collider를 트리거로 강제 설정
         CircleCollider2D col = explosion.GetComponent<CircleCollider2D>();
-        if (col != null) col.isTrigger = true;
 
-        // 트리거 범위 안 적 체크
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
-            explosion.transform.position,
-            col.radius
-        );
-
-        foreach (Collider2D enemy in hitEnemies)
+        if (col != null)
         {
-            if (enemy.CompareTag(enemyTag))
+            col.isTrigger = true;
+
+            float realRadius = col.radius * Mathf.Max(explosion.transform.localScale.x, explosion.transform.localScale.y);
+
+            Collider2D[] hitEnemies;
+
+            if (enemyLayer != 0)
+                hitEnemies = Physics2D.OverlapCircleAll(explosion.transform.position, realRadius, enemyLayer);
+            else
+                hitEnemies = Physics2D.OverlapCircleAll(explosion.transform.position, realRadius);
+
+            foreach (Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
-                enemy.GetComponent<RangedEnemy>()?.TakeDamage(damage);
-                enemy.GetComponent<ReconEnemyController>()?.TakeDamage(damage);
+                // 태그 확인 
+                if (enemy.CompareTag(enemyTag))
+                {
+                    enemy.GetComponent<EnemyController>()?.TakeDamage(damage);
+                    enemy.GetComponent<RangedEnemy>()?.TakeDamage(damage);
+                    enemy.GetComponent<ReconEnemyController>()?.TakeDamage(damage);
+                    enemy.GetComponent<GrenadierEnemy>()?.TakeDamage(damage);
+                }
             }
         }
 
-        // 폭발 프리팹 잠시 후 삭제
+        // 폭발 프리팹 삭제 및 자기 자신 삭제
         Destroy(explosion, 0.5f);
         Destroy(gameObject);
     }
+
 }

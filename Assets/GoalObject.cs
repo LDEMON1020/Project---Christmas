@@ -4,6 +4,14 @@ public class GoalObject : MonoBehaviour
 {
     public bool isGameClear = false;
     public GameObject GameClearPanel;
+    public CoinManager coinManager;
+    public int RewardCoins = 0;
+
+
+    private void Awake()
+    {
+        coinManager = FindObjectOfType<CoinManager>();
+    }
     // Start is called before the first frame update
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -18,6 +26,7 @@ public class GoalObject : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
+            coinManager.coin += RewardCoins; // 보너스 코인 추가
         }
     }
 }

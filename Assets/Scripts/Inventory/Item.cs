@@ -5,6 +5,7 @@ public class Item : ScriptableObject
 {
     public string itemName;
     public Sprite itemIcon;
+    public int Price;
     public GameObject weaponPrefab;
 
     [Header("Item Type")]

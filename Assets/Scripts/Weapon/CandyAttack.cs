@@ -79,6 +79,8 @@ public class CandyAttack : MonoBehaviour
                 hit.collider.GetComponent<EnemyController>()?.TakeDamage(Damage);
                 hit.collider.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
                 hit.collider.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+                hit.collider.GetComponent<GrenadierEnemy>()?.TakeDamage(Damage);
+                
             }
         }
     }
