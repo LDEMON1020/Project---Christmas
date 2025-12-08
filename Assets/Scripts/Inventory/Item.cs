@@ -24,6 +24,7 @@ public class Item : ScriptableObject
         Cake, //크리스마스 케이크
         Cookie, //진저 쿠키
         Glove, //넉백 장갑
-        Cocoa //코코아
+        Cocoa, //코코아
+        Sled //산타 썰매
     }
 }
