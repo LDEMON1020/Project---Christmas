@@ -42,7 +42,6 @@ public class SantaSled : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
         }
     }
 }
