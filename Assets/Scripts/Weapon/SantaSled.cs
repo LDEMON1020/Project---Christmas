@@ -27,9 +27,15 @@ public class SantaSled : MonoBehaviour
         float facing = player.transform.localScale.x;
 
         if (facing < 0)
+        {
             direction = Vector2.left;
+            gameObject.transform.localScale = new Vector3(-10, 10, 1);
+        }
         else
+        {
             direction = Vector2.right;
+            gameObject.transform.localScale = new Vector3(10, 10, 1);
+        }
     }
 
     void Update()
