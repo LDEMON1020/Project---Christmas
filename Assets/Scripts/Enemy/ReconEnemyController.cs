@@ -36,6 +36,8 @@ public class ReconEnemyController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (isDead) return;
+
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
         if (isKnockback) return; // 넉백 중이면 이동하지 않음
@@ -47,6 +49,8 @@ public class ReconEnemyController : MonoBehaviour
 
     void Flip()
     {
+        if (isDead) return;
+
         // 방향 반전
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);

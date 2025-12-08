@@ -38,6 +38,8 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
         //  스턴 중이면 완전 정지
@@ -86,6 +88,8 @@ public class EnemyController : MonoBehaviour, IStunnable   //  IStunnable 추가
 
     void Flip()
     {
+        if (isDead) return;
+
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
     }

@@ -57,6 +57,9 @@ public class GrenadierEnemy : MonoBehaviour, IStunnable
 
     void FixedUpdate()
     {
+
+        if (isDead) return;
+
         if (animator != null)
             animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
@@ -156,6 +159,8 @@ public class GrenadierEnemy : MonoBehaviour, IStunnable
 
     void Flip()
     {
+        if (isDead) return;
+
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
     }
