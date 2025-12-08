@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 1558704603}
-  sceneName: Stage 1
+  sceneName: Stage 3
 --- !u!212 &1558704606
 SpriteRenderer:
   m_ObjectHideFlags: 0
