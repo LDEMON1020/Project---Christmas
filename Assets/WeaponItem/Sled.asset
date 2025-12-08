@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Sled
   itemIcon: {fileID: 21300000, guid: b1e435a18724f034dbde3cbd99172b60, type: 3}
   Price: 1500
-  weaponPrefab: {fileID: 8412760653921674434, guid: d1e25f0afdfadae498d81627da92d0d5, type: 3}
+  weaponPrefab: {fileID: 2576056693132324872, guid: d1e25f0afdfadae498d81627da92d0d5, type: 3}
   isEquippable: 1
   consumeOnAttack: 1
   weaponType: 9
