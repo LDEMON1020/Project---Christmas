@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 864474905495090855}
   - component: {fileID: 5263107650230999711}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CarrotKnife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2341455468153752020}
   - component: {fileID: 6924314427349341512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

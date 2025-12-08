@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class HammerAttack : MonoBehaviour
+public class HammerAttack : MonoBehaviour, IStunnable
 {
     [Header("공격 설정")]
     public int damage = 5;
@@ -19,6 +19,9 @@ public class HammerAttack : MonoBehaviour
     private Transform player;
     private bool isAttacking = false;
 
+    private bool isStunned = false;
+    private float stunEndTime = 0f;
+
     void Start()
     {
         enemy = transform.parent;
@@ -28,6 +31,14 @@ public class HammerAttack : MonoBehaviour
 
     void Update()
     {
+        if (isStunned)
+        {
+            if (Time.time >= stunEndTime)
+                isStunned = false; // 기절 해제
+
+            return; // 공격 로직 실행 X
+        }
+
         if (player == null || isAttacking) return;
 
         float dist = Vector2.Distance(enemy.position, player.position);
@@ -74,5 +85,17 @@ public class HammerAttack : MonoBehaviour
             if (pc != null)
                 pc.TakeDamage(damage);
         }
+    }
+
+    public void Stun(float duration)
+    {
+        isStunned = true;
+        stunEndTime = Time.time + duration;
+
+        // 공격 중이었으면 즉시 중단
+        isAttacking = false;
+
+        if (animator != null)
+            animator.SetTrigger("Stunned");
     }
 }
