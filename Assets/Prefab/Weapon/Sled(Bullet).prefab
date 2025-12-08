@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  lifeTime: 3
+  lifeTime: 4
   player: {fileID: 0}
 --- !u!61 &-373070337256484778
 BoxCollider2D:
