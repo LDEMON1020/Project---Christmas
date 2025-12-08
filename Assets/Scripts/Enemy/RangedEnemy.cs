@@ -56,6 +56,8 @@ public class RangedEnemy : MonoBehaviour, IStunnable
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
         // 기절 중이면 이동·추적·공격 전부 중단 
@@ -148,6 +150,8 @@ public class RangedEnemy : MonoBehaviour, IStunnable
 
     void Flip()
     {
+        if (isDead) return;
+
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
     }
