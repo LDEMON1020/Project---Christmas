@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadierEnemy : MonoBehaviour
+public class GrenadierEnemy : MonoBehaviour, IStunnable
 {
     public enum EnemyState { Idle, Trace, Attack }
     private EnemyState state = EnemyState.Idle;
