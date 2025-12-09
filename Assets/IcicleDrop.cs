@@ -9,6 +9,12 @@ public class IcicleDrop : MonoBehaviour
     public int fallSpeed = 5;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+       player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
