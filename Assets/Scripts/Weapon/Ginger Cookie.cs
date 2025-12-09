@@ -10,6 +10,7 @@ public class GingerCookie : MonoBehaviour
     public float attackRate = 0.5f;
     private Transform target;
     public float traceRange = 5f;
+    public AudioClip CookieSound;
 
     private Vector2 direction;
 
@@ -72,6 +73,7 @@ public class GingerCookie : MonoBehaviour
         // Enemy가 아닌 경우 무시하고 벽 관통
         if (other.CompareTag("Ground"))
         {
+            AudioSource.PlayClipAtPoint(CookieSound, transform.position);
             Destroy(gameObject);
             Debug.Log("충돌: " + other.name);
         }
@@ -79,10 +81,12 @@ public class GingerCookie : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
            
-              other.GetComponent<EnemyController>()?.TakeDamage(Damage);
-               other.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
-               other.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
+            other.GetComponent<EnemyController>()?.TakeDamage(Damage);
+            other.GetComponent<ReconEnemyController>()?.TakeDamage(Damage);
+            other.GetComponent<RangedEnemy>()?.TakeDamage(Damage);
             other.GetComponent<GrenadierEnemy>()?.TakeDamage(Damage);
+
+            AudioSource.PlayClipAtPoint(CookieSound, transform.position);
             Destroy(gameObject);
         }
     }

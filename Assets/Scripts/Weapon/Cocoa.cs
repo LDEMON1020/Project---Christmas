@@ -7,6 +7,7 @@ public class Cocoa : MonoBehaviour
     public int healAmount = 5;          // 회복량
     public float cooldownTime = 60f;    // 1분 쿨타임
     public Animator animator;
+    public AudioSource audioSource;
 
     private bool isAvailable = true;
     private PlayerController player;
@@ -21,7 +22,6 @@ public class Cocoa : MonoBehaviour
         if (Input.GetMouseButtonDown(0))   // 마우스 좌클릭
         {
             TryUse();
-            InventoryManager.Instance.ConsumeEquippedItemOnAttack();
         }
     }
 
@@ -36,6 +36,12 @@ public class Cocoa : MonoBehaviour
         // 아이템 사용 애니메이션
         if (animator != null)
             animator.SetTrigger("Use");
+
+        // 회복 사운드 시작
+        audioSource.Play();
+
+        // 아이템 소모
+        InventoryManager.Instance.ConsumeEquippedItemOnAttack();
 
         // 쿨타임 시작
         StartCoroutine(Cooldown());

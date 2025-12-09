@@ -104,6 +104,7 @@ MonoBehaviour:
   Damage: 20
   attackRate: 0.5
   traceRange: 5
+  CookieSound: {fileID: 8300000, guid: 36814b4ffb04672448046df359aff52d, type: 3}
   player: {fileID: 0}
 --- !u!61 &-7030348911122361152
 BoxCollider2D:

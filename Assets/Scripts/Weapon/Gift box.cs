@@ -5,6 +5,7 @@ public class Giftbox : MonoBehaviour
     public GameObject shardPrefab;
     public int minShards = 2;
     public int maxShards = 3;
+    public AudioClip GiftBoxSound;
 
     [Header("Æø¹ß ¼³Á¤")]
     public float delayBeforeExplosion = 3.0f;
@@ -33,6 +34,7 @@ public class Giftbox : MonoBehaviour
         }
 
         // Æø¹ß ÈÄ ÀÚ±â ÀÚ½Å ÆÄ±«
+        AudioSource.PlayClipAtPoint(GiftBoxSound, transform.position);
         Destroy(gameObject);
     }
 }

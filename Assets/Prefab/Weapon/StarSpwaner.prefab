@@ -47,6 +47,6 @@ MonoBehaviour:
   starPrefab: {fileID: 4184121316204263676, guid: 1e8220485dde82b44a7e0c2eb1f1e01f, type: 3}
   spawnInterval: 0.3
   spawnRangeX: 5
-  spawnRangeY: 3
+  spawnRangeY: 5
   activeDuration: 3
   starLifetime: 3

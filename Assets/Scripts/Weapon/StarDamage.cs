@@ -31,7 +31,10 @@ public class StarDamage : MonoBehaviour
                 Greandier.TakeDamage(damage);
             }
         }
+
+        if (collision.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }    
     }
-
-
 }
