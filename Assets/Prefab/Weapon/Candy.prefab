@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8427249673612125703}
   m_Layer: 0
-  m_Name: AttackPoint
+  m_Name: EffectPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 8270584153569057936}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 0.47, z: 0}
+  m_LocalPosition: {x: -0.54, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -131,12 +131,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
-  attackRange: 1.5
+  attackRange: 2
   attackRate: 0.5
   enemyTag: Enemy
   attackEffectPrefab: {fileID: 1519650067680659283, guid: 6c75f9118302d12449655dd2740f94fd, type: 3}
   inventoryManager: {fileID: 0}
   goalObject: {fileID: 0}
+  attackPoint: {fileID: 8427249673612125703}
 --- !u!95 &2109854388288334191
 Animator:
   serializedVersion: 5

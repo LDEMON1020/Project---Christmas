@@ -35,8 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isInvincible; // 무적 상태 여부
 
-    private Animator animator;  
-
+    private Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -201,6 +200,10 @@ public class PlayerController : MonoBehaviour
 
         ChristmasBell sc = circle.GetComponent<ChristmasBell>();
         sc.target = this.transform;
+    }
+    public bool IsFacingLeft()
+    {
+        return transform.localScale.x < 0;
     }
 
 }
