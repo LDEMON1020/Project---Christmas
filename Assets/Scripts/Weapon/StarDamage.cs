@@ -35,6 +35,11 @@ public class StarDamage : MonoBehaviour
         if (collision.CompareTag("Ground"))
         {
             Destroy(gameObject);
-        }    
+        }
+
+        if (collision.CompareTag("Boundary"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
