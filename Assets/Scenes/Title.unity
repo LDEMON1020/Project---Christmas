@@ -1942,6 +1942,8 @@ MonoBehaviour:
   playScenes:
   - Title
   - ChoiceScene
+  - StageChoiceScene
+  - ShopScene
 --- !u!1 &1330857707
 GameObject:
   m_ObjectHideFlags: 0
