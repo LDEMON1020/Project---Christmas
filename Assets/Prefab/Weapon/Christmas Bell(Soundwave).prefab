@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4300523974331862685}
   - component: {fileID: 4439411044832956556}
   m_Layer: 0
-  m_Name: Christmas Bell
+  m_Name: Christmas Bell(Soundwave)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  followDuration: 10000
+  followDuration: 1
   offset: {x: 0, y: 0, z: 0}
-  stunDuration: 10000
+  stunDuration: 8
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256

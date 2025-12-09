@@ -26,5 +26,6 @@ public class Item : ScriptableObject
         Glove, //넉백 장갑
         Cocoa, //코코아
         Sled //산타 썰매
+, Bell //종
     }
 }
