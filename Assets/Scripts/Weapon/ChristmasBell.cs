@@ -26,7 +26,16 @@ public class ChristmasBell : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
         spawnTime = Time.time;
+    }
+
+    public void SetTarget(Transform t)
+    {
+        target = t;
     }
 
     void FixedUpdate()
