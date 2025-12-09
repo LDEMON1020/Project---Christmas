@@ -934,6 +934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 726794033}
   - component: {fileID: 726794034}
+  - component: {fileID: 726794035}
   m_Layer: 0
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -1022,10 +1023,23 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.9
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &726794035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726794032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa29f229dd9b75643b801eab49f4abdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 726794034}
 --- !u!1 &750544895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,11 +1657,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3931c809111181f4795b91437ae0a74e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
