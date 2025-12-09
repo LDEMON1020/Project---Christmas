@@ -135,6 +135,8 @@ MonoBehaviour:
   attackRate: 0.5
   enemyTag: Enemy
   attackEffectPrefab: {fileID: 1519650067680659283, guid: 6c75f9118302d12449655dd2740f94fd, type: 3}
+  inventoryManager: {fileID: 0}
+  goalObject: {fileID: 0}
 --- !u!95 &2109854388288334191
 Animator:
   serializedVersion: 5
