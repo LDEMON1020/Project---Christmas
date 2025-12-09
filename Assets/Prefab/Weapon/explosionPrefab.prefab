@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2654313173198967667}
   - component: {fileID: 5471328546114515926}
+  - component: {fileID: 2854664298046715993}
   m_Layer: 0
   m_Name: explosionPrefab
   m_TagString: Untagged
@@ -68,6 +69,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &2854664298046715993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888844358310461360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa2b0ff0cb847a4fa024dca02e97a86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionSound: {fileID: 8300000, guid: f79a735e2db80ac46b11ee76ec54672e, type: 3}
 --- !u!1001 &2720406889245555414
 PrefabInstance:
   m_ObjectHideFlags: 0

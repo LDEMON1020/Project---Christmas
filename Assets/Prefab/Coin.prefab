@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinData: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
+  pickUpSound: {fileID: 8300000, guid: 5671d5483395f4d3abb7d9d0380a5e88, type: 3}
 --- !u!70 &5684535158055842798
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
