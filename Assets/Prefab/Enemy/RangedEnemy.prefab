@@ -58,7 +58,7 @@ MonoBehaviour:
   firePoint: {fileID: 2286139289679946464}
   maxHP: 5
   currentHP: 0
-  coinData: {fileID: 0}
+  coinData: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
 --- !u!50 &113136291637724628
 Rigidbody2D:
   serializedVersion: 4

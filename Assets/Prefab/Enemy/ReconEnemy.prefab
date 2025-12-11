@@ -55,7 +55,7 @@ MonoBehaviour:
   playerTag: Player
   maxHP: 20
   currentHP: 0
-  coinData: {fileID: 0}
+  coinData: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
 --- !u!50 &2944746611485151880
 Rigidbody2D:
   serializedVersion: 4

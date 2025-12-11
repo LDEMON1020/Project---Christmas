@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   TraceRange: 15
-  coinData: {fileID: 0}
+  coinData: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
   maxHP: 20
 --- !u!50 &8268190117451078831
 Rigidbody2D:

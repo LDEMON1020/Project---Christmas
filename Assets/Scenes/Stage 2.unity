@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4941694174565757647, guid: bb48f1c5bb52544419a43baaa00448c9, type: 3}
+      propertyPath: coinData
+      value: 
+      objectReference: {fileID: 11400000, guid: c79e13b908f818444b5627f4c232ab33, type: 2}
     - target: {fileID: 6375943108428749388, guid: bb48f1c5bb52544419a43baaa00448c9, type: 3}
       propertyPath: m_Name
       value: RangedEnemy
@@ -18479,7 +18483,7 @@ MonoBehaviour:
   isGameClear: 0
   GameClearPanel: {fileID: 1915241238}
   coinManager: {fileID: 0}
-  RewardCoins: 500
+  RewardCoins: 750
 --- !u!61 &1768933627
 BoxCollider2D:
   m_ObjectHideFlags: 0
